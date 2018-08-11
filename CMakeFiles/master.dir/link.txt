@@ -1,0 +1,1 @@
+/usr/bin/c++       CMakeFiles/./master.dir/src/uart.cpp.o CMakeFiles/./master.dir/src/main.cpp.o CMakeFiles/./master.dir/src/orderparser.cpp.o  -o ./master -rdynamic -lpthread 
