@@ -1,1 +1,1 @@
-/usr/bin/c++       CMakeFiles/./master.dir/src/uart.cpp.o CMakeFiles/./master.dir/src/main.cpp.o CMakeFiles/./master.dir/src/orderparser.cpp.o  -o ./master -rdynamic -lpthread 
+/usr/bin/c++       CMakeFiles/master.dir/src/orderpoll.cpp.o CMakeFiles/master.dir/src/uart.cpp.o CMakeFiles/master.dir/src/main.cpp.o CMakeFiles/master.dir/src/httpclient.cpp.o CMakeFiles/master.dir/src/converter.cpp.o CMakeFiles/master.dir/src/orderparser.cpp.o  -o master -rdynamic -L./lib -lpthread -lcurl -Wl,-rpath,./lib 

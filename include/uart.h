@@ -1,3 +1,6 @@
+#ifndef UART_H_
+#define UART_H_
+
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
@@ -35,3 +38,4 @@ private:
 	void Listening();
 	int SetOpt(int fd, int BaudRate, int DataBit, char Parity, int StopBit);
 };
+#endif

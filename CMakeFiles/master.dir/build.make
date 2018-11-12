@@ -32,120 +32,198 @@ CMAKE_COMMAND = /usr/bin/cmake
 RM = /usr/bin/cmake -E remove -f
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/topeet/Linux+QT/projects/master
+CMAKE_SOURCE_DIR = /home/topeet/Linux+QT/projects/master-host
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/topeet/Linux+QT/projects/master
+CMAKE_BINARY_DIR = /home/topeet/Linux+QT/projects/master-host
 
 # Include any dependencies generated for this target.
-include CMakeFiles/./master.dir/depend.make
+include CMakeFiles/master.dir/depend.make
 
 # Include the progress variables for this target.
-include CMakeFiles/./master.dir/progress.make
+include CMakeFiles/master.dir/progress.make
 
 # Include the compile flags for this target's objects.
-include CMakeFiles/./master.dir/flags.make
+include CMakeFiles/master.dir/flags.make
 
-CMakeFiles/./master.dir/src/uart.cpp.o: CMakeFiles/./master.dir/flags.make
-CMakeFiles/./master.dir/src/uart.cpp.o: src/uart.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/topeet/Linux+QT/projects/master/CMakeFiles $(CMAKE_PROGRESS_1)
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/./master.dir/src/uart.cpp.o"
-	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/./master.dir/src/uart.cpp.o -c /home/topeet/Linux+QT/projects/master/src/uart.cpp
+CMakeFiles/master.dir/src/orderpoll.cpp.o: CMakeFiles/master.dir/flags.make
+CMakeFiles/master.dir/src/orderpoll.cpp.o: src/orderpoll.cpp
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/topeet/Linux+QT/projects/master-host/CMakeFiles $(CMAKE_PROGRESS_1)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/master.dir/src/orderpoll.cpp.o"
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/master.dir/src/orderpoll.cpp.o -c /home/topeet/Linux+QT/projects/master-host/src/orderpoll.cpp
 
-CMakeFiles/./master.dir/src/uart.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/./master.dir/src/uart.cpp.i"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/topeet/Linux+QT/projects/master/src/uart.cpp > CMakeFiles/./master.dir/src/uart.cpp.i
+CMakeFiles/master.dir/src/orderpoll.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/master.dir/src/orderpoll.cpp.i"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/topeet/Linux+QT/projects/master-host/src/orderpoll.cpp > CMakeFiles/master.dir/src/orderpoll.cpp.i
 
-CMakeFiles/./master.dir/src/uart.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/./master.dir/src/uart.cpp.s"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/topeet/Linux+QT/projects/master/src/uart.cpp -o CMakeFiles/./master.dir/src/uart.cpp.s
+CMakeFiles/master.dir/src/orderpoll.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/master.dir/src/orderpoll.cpp.s"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/topeet/Linux+QT/projects/master-host/src/orderpoll.cpp -o CMakeFiles/master.dir/src/orderpoll.cpp.s
 
-CMakeFiles/./master.dir/src/uart.cpp.o.requires:
-.PHONY : CMakeFiles/./master.dir/src/uart.cpp.o.requires
+CMakeFiles/master.dir/src/orderpoll.cpp.o.requires:
+.PHONY : CMakeFiles/master.dir/src/orderpoll.cpp.o.requires
 
-CMakeFiles/./master.dir/src/uart.cpp.o.provides: CMakeFiles/./master.dir/src/uart.cpp.o.requires
-	$(MAKE) -f CMakeFiles/./master.dir/build.make CMakeFiles/./master.dir/src/uart.cpp.o.provides.build
-.PHONY : CMakeFiles/./master.dir/src/uart.cpp.o.provides
+CMakeFiles/master.dir/src/orderpoll.cpp.o.provides: CMakeFiles/master.dir/src/orderpoll.cpp.o.requires
+	$(MAKE) -f CMakeFiles/master.dir/build.make CMakeFiles/master.dir/src/orderpoll.cpp.o.provides.build
+.PHONY : CMakeFiles/master.dir/src/orderpoll.cpp.o.provides
 
-CMakeFiles/./master.dir/src/uart.cpp.o.provides.build: CMakeFiles/./master.dir/src/uart.cpp.o
+CMakeFiles/master.dir/src/orderpoll.cpp.o.provides.build: CMakeFiles/master.dir/src/orderpoll.cpp.o
 
-CMakeFiles/./master.dir/src/main.cpp.o: CMakeFiles/./master.dir/flags.make
-CMakeFiles/./master.dir/src/main.cpp.o: src/main.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/topeet/Linux+QT/projects/master/CMakeFiles $(CMAKE_PROGRESS_2)
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/./master.dir/src/main.cpp.o"
-	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/./master.dir/src/main.cpp.o -c /home/topeet/Linux+QT/projects/master/src/main.cpp
+CMakeFiles/master.dir/src/uart.cpp.o: CMakeFiles/master.dir/flags.make
+CMakeFiles/master.dir/src/uart.cpp.o: src/uart.cpp
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/topeet/Linux+QT/projects/master-host/CMakeFiles $(CMAKE_PROGRESS_2)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/master.dir/src/uart.cpp.o"
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/master.dir/src/uart.cpp.o -c /home/topeet/Linux+QT/projects/master-host/src/uart.cpp
 
-CMakeFiles/./master.dir/src/main.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/./master.dir/src/main.cpp.i"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/topeet/Linux+QT/projects/master/src/main.cpp > CMakeFiles/./master.dir/src/main.cpp.i
+CMakeFiles/master.dir/src/uart.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/master.dir/src/uart.cpp.i"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/topeet/Linux+QT/projects/master-host/src/uart.cpp > CMakeFiles/master.dir/src/uart.cpp.i
 
-CMakeFiles/./master.dir/src/main.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/./master.dir/src/main.cpp.s"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/topeet/Linux+QT/projects/master/src/main.cpp -o CMakeFiles/./master.dir/src/main.cpp.s
+CMakeFiles/master.dir/src/uart.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/master.dir/src/uart.cpp.s"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/topeet/Linux+QT/projects/master-host/src/uart.cpp -o CMakeFiles/master.dir/src/uart.cpp.s
 
-CMakeFiles/./master.dir/src/main.cpp.o.requires:
-.PHONY : CMakeFiles/./master.dir/src/main.cpp.o.requires
+CMakeFiles/master.dir/src/uart.cpp.o.requires:
+.PHONY : CMakeFiles/master.dir/src/uart.cpp.o.requires
 
-CMakeFiles/./master.dir/src/main.cpp.o.provides: CMakeFiles/./master.dir/src/main.cpp.o.requires
-	$(MAKE) -f CMakeFiles/./master.dir/build.make CMakeFiles/./master.dir/src/main.cpp.o.provides.build
-.PHONY : CMakeFiles/./master.dir/src/main.cpp.o.provides
+CMakeFiles/master.dir/src/uart.cpp.o.provides: CMakeFiles/master.dir/src/uart.cpp.o.requires
+	$(MAKE) -f CMakeFiles/master.dir/build.make CMakeFiles/master.dir/src/uart.cpp.o.provides.build
+.PHONY : CMakeFiles/master.dir/src/uart.cpp.o.provides
 
-CMakeFiles/./master.dir/src/main.cpp.o.provides.build: CMakeFiles/./master.dir/src/main.cpp.o
+CMakeFiles/master.dir/src/uart.cpp.o.provides.build: CMakeFiles/master.dir/src/uart.cpp.o
 
-CMakeFiles/./master.dir/src/orderparser.cpp.o: CMakeFiles/./master.dir/flags.make
-CMakeFiles/./master.dir/src/orderparser.cpp.o: src/orderparser.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/topeet/Linux+QT/projects/master/CMakeFiles $(CMAKE_PROGRESS_3)
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/./master.dir/src/orderparser.cpp.o"
-	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/./master.dir/src/orderparser.cpp.o -c /home/topeet/Linux+QT/projects/master/src/orderparser.cpp
+CMakeFiles/master.dir/src/main.cpp.o: CMakeFiles/master.dir/flags.make
+CMakeFiles/master.dir/src/main.cpp.o: src/main.cpp
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/topeet/Linux+QT/projects/master-host/CMakeFiles $(CMAKE_PROGRESS_3)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/master.dir/src/main.cpp.o"
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/master.dir/src/main.cpp.o -c /home/topeet/Linux+QT/projects/master-host/src/main.cpp
 
-CMakeFiles/./master.dir/src/orderparser.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/./master.dir/src/orderparser.cpp.i"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/topeet/Linux+QT/projects/master/src/orderparser.cpp > CMakeFiles/./master.dir/src/orderparser.cpp.i
+CMakeFiles/master.dir/src/main.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/master.dir/src/main.cpp.i"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/topeet/Linux+QT/projects/master-host/src/main.cpp > CMakeFiles/master.dir/src/main.cpp.i
 
-CMakeFiles/./master.dir/src/orderparser.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/./master.dir/src/orderparser.cpp.s"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/topeet/Linux+QT/projects/master/src/orderparser.cpp -o CMakeFiles/./master.dir/src/orderparser.cpp.s
+CMakeFiles/master.dir/src/main.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/master.dir/src/main.cpp.s"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/topeet/Linux+QT/projects/master-host/src/main.cpp -o CMakeFiles/master.dir/src/main.cpp.s
 
-CMakeFiles/./master.dir/src/orderparser.cpp.o.requires:
-.PHONY : CMakeFiles/./master.dir/src/orderparser.cpp.o.requires
+CMakeFiles/master.dir/src/main.cpp.o.requires:
+.PHONY : CMakeFiles/master.dir/src/main.cpp.o.requires
 
-CMakeFiles/./master.dir/src/orderparser.cpp.o.provides: CMakeFiles/./master.dir/src/orderparser.cpp.o.requires
-	$(MAKE) -f CMakeFiles/./master.dir/build.make CMakeFiles/./master.dir/src/orderparser.cpp.o.provides.build
-.PHONY : CMakeFiles/./master.dir/src/orderparser.cpp.o.provides
+CMakeFiles/master.dir/src/main.cpp.o.provides: CMakeFiles/master.dir/src/main.cpp.o.requires
+	$(MAKE) -f CMakeFiles/master.dir/build.make CMakeFiles/master.dir/src/main.cpp.o.provides.build
+.PHONY : CMakeFiles/master.dir/src/main.cpp.o.provides
 
-CMakeFiles/./master.dir/src/orderparser.cpp.o.provides.build: CMakeFiles/./master.dir/src/orderparser.cpp.o
+CMakeFiles/master.dir/src/main.cpp.o.provides.build: CMakeFiles/master.dir/src/main.cpp.o
 
-# Object files for target ./master
-_/master_OBJECTS = \
-"CMakeFiles/./master.dir/src/uart.cpp.o" \
-"CMakeFiles/./master.dir/src/main.cpp.o" \
-"CMakeFiles/./master.dir/src/orderparser.cpp.o"
+CMakeFiles/master.dir/src/httpclient.cpp.o: CMakeFiles/master.dir/flags.make
+CMakeFiles/master.dir/src/httpclient.cpp.o: src/httpclient.cpp
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/topeet/Linux+QT/projects/master-host/CMakeFiles $(CMAKE_PROGRESS_4)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/master.dir/src/httpclient.cpp.o"
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/master.dir/src/httpclient.cpp.o -c /home/topeet/Linux+QT/projects/master-host/src/httpclient.cpp
 
-# External object files for target ./master
-_/master_EXTERNAL_OBJECTS =
+CMakeFiles/master.dir/src/httpclient.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/master.dir/src/httpclient.cpp.i"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/topeet/Linux+QT/projects/master-host/src/httpclient.cpp > CMakeFiles/master.dir/src/httpclient.cpp.i
 
-./master: CMakeFiles/./master.dir/src/uart.cpp.o
-./master: CMakeFiles/./master.dir/src/main.cpp.o
-./master: CMakeFiles/./master.dir/src/orderparser.cpp.o
-./master: CMakeFiles/./master.dir/build.make
-./master: CMakeFiles/./master.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --red --bold "Linking CXX executable ./master"
-	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/./master.dir/link.txt --verbose=$(VERBOSE)
+CMakeFiles/master.dir/src/httpclient.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/master.dir/src/httpclient.cpp.s"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/topeet/Linux+QT/projects/master-host/src/httpclient.cpp -o CMakeFiles/master.dir/src/httpclient.cpp.s
+
+CMakeFiles/master.dir/src/httpclient.cpp.o.requires:
+.PHONY : CMakeFiles/master.dir/src/httpclient.cpp.o.requires
+
+CMakeFiles/master.dir/src/httpclient.cpp.o.provides: CMakeFiles/master.dir/src/httpclient.cpp.o.requires
+	$(MAKE) -f CMakeFiles/master.dir/build.make CMakeFiles/master.dir/src/httpclient.cpp.o.provides.build
+.PHONY : CMakeFiles/master.dir/src/httpclient.cpp.o.provides
+
+CMakeFiles/master.dir/src/httpclient.cpp.o.provides.build: CMakeFiles/master.dir/src/httpclient.cpp.o
+
+CMakeFiles/master.dir/src/converter.cpp.o: CMakeFiles/master.dir/flags.make
+CMakeFiles/master.dir/src/converter.cpp.o: src/converter.cpp
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/topeet/Linux+QT/projects/master-host/CMakeFiles $(CMAKE_PROGRESS_5)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/master.dir/src/converter.cpp.o"
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/master.dir/src/converter.cpp.o -c /home/topeet/Linux+QT/projects/master-host/src/converter.cpp
+
+CMakeFiles/master.dir/src/converter.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/master.dir/src/converter.cpp.i"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/topeet/Linux+QT/projects/master-host/src/converter.cpp > CMakeFiles/master.dir/src/converter.cpp.i
+
+CMakeFiles/master.dir/src/converter.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/master.dir/src/converter.cpp.s"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/topeet/Linux+QT/projects/master-host/src/converter.cpp -o CMakeFiles/master.dir/src/converter.cpp.s
+
+CMakeFiles/master.dir/src/converter.cpp.o.requires:
+.PHONY : CMakeFiles/master.dir/src/converter.cpp.o.requires
+
+CMakeFiles/master.dir/src/converter.cpp.o.provides: CMakeFiles/master.dir/src/converter.cpp.o.requires
+	$(MAKE) -f CMakeFiles/master.dir/build.make CMakeFiles/master.dir/src/converter.cpp.o.provides.build
+.PHONY : CMakeFiles/master.dir/src/converter.cpp.o.provides
+
+CMakeFiles/master.dir/src/converter.cpp.o.provides.build: CMakeFiles/master.dir/src/converter.cpp.o
+
+CMakeFiles/master.dir/src/orderparser.cpp.o: CMakeFiles/master.dir/flags.make
+CMakeFiles/master.dir/src/orderparser.cpp.o: src/orderparser.cpp
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/topeet/Linux+QT/projects/master-host/CMakeFiles $(CMAKE_PROGRESS_6)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/master.dir/src/orderparser.cpp.o"
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/master.dir/src/orderparser.cpp.o -c /home/topeet/Linux+QT/projects/master-host/src/orderparser.cpp
+
+CMakeFiles/master.dir/src/orderparser.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/master.dir/src/orderparser.cpp.i"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/topeet/Linux+QT/projects/master-host/src/orderparser.cpp > CMakeFiles/master.dir/src/orderparser.cpp.i
+
+CMakeFiles/master.dir/src/orderparser.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/master.dir/src/orderparser.cpp.s"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/topeet/Linux+QT/projects/master-host/src/orderparser.cpp -o CMakeFiles/master.dir/src/orderparser.cpp.s
+
+CMakeFiles/master.dir/src/orderparser.cpp.o.requires:
+.PHONY : CMakeFiles/master.dir/src/orderparser.cpp.o.requires
+
+CMakeFiles/master.dir/src/orderparser.cpp.o.provides: CMakeFiles/master.dir/src/orderparser.cpp.o.requires
+	$(MAKE) -f CMakeFiles/master.dir/build.make CMakeFiles/master.dir/src/orderparser.cpp.o.provides.build
+.PHONY : CMakeFiles/master.dir/src/orderparser.cpp.o.provides
+
+CMakeFiles/master.dir/src/orderparser.cpp.o.provides.build: CMakeFiles/master.dir/src/orderparser.cpp.o
+
+# Object files for target master
+master_OBJECTS = \
+"CMakeFiles/master.dir/src/orderpoll.cpp.o" \
+"CMakeFiles/master.dir/src/uart.cpp.o" \
+"CMakeFiles/master.dir/src/main.cpp.o" \
+"CMakeFiles/master.dir/src/httpclient.cpp.o" \
+"CMakeFiles/master.dir/src/converter.cpp.o" \
+"CMakeFiles/master.dir/src/orderparser.cpp.o"
+
+# External object files for target master
+master_EXTERNAL_OBJECTS =
+
+master: CMakeFiles/master.dir/src/orderpoll.cpp.o
+master: CMakeFiles/master.dir/src/uart.cpp.o
+master: CMakeFiles/master.dir/src/main.cpp.o
+master: CMakeFiles/master.dir/src/httpclient.cpp.o
+master: CMakeFiles/master.dir/src/converter.cpp.o
+master: CMakeFiles/master.dir/src/orderparser.cpp.o
+master: CMakeFiles/master.dir/build.make
+master: CMakeFiles/master.dir/link.txt
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --red --bold "Linking CXX executable master"
+	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/master.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
-CMakeFiles/./master.dir/build: ./master
-.PHONY : CMakeFiles/./master.dir/build
+CMakeFiles/master.dir/build: master
+.PHONY : CMakeFiles/master.dir/build
 
-CMakeFiles/./master.dir/requires: CMakeFiles/./master.dir/src/uart.cpp.o.requires
-CMakeFiles/./master.dir/requires: CMakeFiles/./master.dir/src/main.cpp.o.requires
-CMakeFiles/./master.dir/requires: CMakeFiles/./master.dir/src/orderparser.cpp.o.requires
-.PHONY : CMakeFiles/./master.dir/requires
+CMakeFiles/master.dir/requires: CMakeFiles/master.dir/src/orderpoll.cpp.o.requires
+CMakeFiles/master.dir/requires: CMakeFiles/master.dir/src/uart.cpp.o.requires
+CMakeFiles/master.dir/requires: CMakeFiles/master.dir/src/main.cpp.o.requires
+CMakeFiles/master.dir/requires: CMakeFiles/master.dir/src/httpclient.cpp.o.requires
+CMakeFiles/master.dir/requires: CMakeFiles/master.dir/src/converter.cpp.o.requires
+CMakeFiles/master.dir/requires: CMakeFiles/master.dir/src/orderparser.cpp.o.requires
+.PHONY : CMakeFiles/master.dir/requires
 
-CMakeFiles/./master.dir/clean:
-	$(CMAKE_COMMAND) -P CMakeFiles/./master.dir/cmake_clean.cmake
-.PHONY : CMakeFiles/./master.dir/clean
+CMakeFiles/master.dir/clean:
+	$(CMAKE_COMMAND) -P CMakeFiles/master.dir/cmake_clean.cmake
+.PHONY : CMakeFiles/master.dir/clean
 
-CMakeFiles/./master.dir/depend:
-	cd /home/topeet/Linux+QT/projects/master && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/topeet/Linux+QT/projects/master /home/topeet/Linux+QT/projects/master /home/topeet/Linux+QT/projects/master /home/topeet/Linux+QT/projects/master /home/topeet/Linux+QT/projects/master/CMakeFiles/master.dir/DependInfo.cmake --color=$(COLOR)
-.PHONY : CMakeFiles/./master.dir/depend
+CMakeFiles/master.dir/depend:
+	cd /home/topeet/Linux+QT/projects/master-host && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/topeet/Linux+QT/projects/master-host /home/topeet/Linux+QT/projects/master-host /home/topeet/Linux+QT/projects/master-host /home/topeet/Linux+QT/projects/master-host /home/topeet/Linux+QT/projects/master-host/CMakeFiles/master.dir/DependInfo.cmake --color=$(COLOR)
+.PHONY : CMakeFiles/master.dir/depend
 

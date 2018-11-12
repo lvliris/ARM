@@ -1,1 +1,1 @@
-/home/topeet/Linux+QT/projects/master/CMakeFiles/./master.dir
+/home/topeet/Linux+QT/projects/master-host/CMakeFiles/master.dir

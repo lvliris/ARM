@@ -1,4 +1,5 @@
 #include "orderparser.h"
+#include "converter.h"
 #include <iostream>
 #include <string>
 #include <exception>
@@ -11,11 +12,16 @@ using namespace std;
 const char* MODE_FILE = "config/mode";
 const char* TRIGGER_FILE = "config/trigger.json";
 
-int ParseOrder(char* order)
+int ParseOrder(char* order, Uart& uart)
 {
+	cout << "parse order" << endl;
 	//parse the order
+	StringStream s(order);
 	Document d;
-	d.Parse(order);
+	d.ParseStream(s);
+	if(d.IsObject())
+		cout << "is object" << endl;
+	//SendOrder(d);
 
 	//process the order
 	Value::ConstMemberIterator iter = d.FindMember("opt");
@@ -35,6 +41,8 @@ int ParseOrder(char* order)
 			ModifyModeOrder(d);
 		else if(act == "del")
 			DeleteModeOrder(d);
+		else if(act == "drop")
+			DropMode(d);
 		else if(act == "disable")
 			DisableMode(d);
 		else if(act == "enable")
@@ -46,15 +54,19 @@ int ParseOrder(char* order)
 	}
 	else if(opt == "send")
 	{
-		iter = d["info"].FindMember("mode_seq");
-		if(iter == d["info"].MemberEnd())
-			SendOrder(d);
+		iter = d["info"].FindMember("mode_index");
+		if(iter == d["info"].MemberEnd() || iter->value.IsNull())
+			SendOrder(d, uart);
 		else
 		{
 			int modeindex = iter->value.GetInt();
 			//cout << modeindex << endl;
-			SendMode(modeindex);
+			SendMode(modeindex, uart);
 		}
+	}
+	else if(opt == "getid")
+	{
+		uart.Write("<01004444U0**********FF>", strlen("<01004444U0**********FF>"));
 	}
 }
 
@@ -100,7 +112,7 @@ int WriteJsonToFile(Document& df, const char* file)
 
 int AddModeOrder(Document& d)
 {
-	int modeindex = d["info"]["mode_seq"].GetInt();
+	int modeindex = d["info"]["mode_index"].GetInt();
 	if(modeindex > MAX_MODE_NUM)
 	{
 		cout << "modeindex " << modeindex << " overflow" << endl;
@@ -147,7 +159,7 @@ int AddModeOrder(Document& d)
 
 int ModifyModeOrder(Document& d)
 {
-	int modeindex = d["info"]["mode_seq"].GetInt();
+	int modeindex = d["info"]["mode_index"].GetInt();
 	if(modeindex > MAX_MODE_NUM)
 	{
 		cout << "modeindex " << modeindex << " overflow" << endl;
@@ -167,18 +179,29 @@ int ModifyModeOrder(Document& d)
 
 	if(!df.IsObject())
 	{
-		cout << "ERROR: the file is supposed to be an array, Reset" << endl;
-		return -1;
+		cout << "ERROR: the mode file is supposed to be an object, Reset" << endl;
+		int ret = AddModeOrder(d);
+		return ret;
 	}
 
+	bool find = false;
 	//search the order to modify
 	for(SizeType i = 0; i < df["orders"].Size(); i++)
 	{
 		if(df["orders"][i]["long_addr"] == d["long_addr"]
 				&& df["orders"][i]["info"]["sub_seq"] == d["info"]["sub_seq"])
 		{
+			find = true;
 			df["orders"][i]["info"]["state"] = d["info"]["state"];
+			break;
 		}
+	}
+
+	//if the order was not found, add it
+	if(!find)
+	{
+		int ret = AddModeOrder(d);
+		return ret;
 	}
 
 	//write json to the file
@@ -196,7 +219,7 @@ int ModifyModeOrder(Document& d)
 
 int DeleteModeOrder(Document& d)
 {
-	int modeindex = d["info"]["mode_seq"].GetInt();
+	int modeindex = d["info"]["mode_index"].GetInt();
 	if(modeindex > MAX_MODE_NUM)
 	{
 		cout << "modeindex " << modeindex << " overflow" << endl;
@@ -245,9 +268,26 @@ int DeleteModeOrder(Document& d)
 	}
 }
 
+int DropMode(Document& d)
+{
+	int modeindex = d["info"]["mode_index"].GetInt();
+	if(modeindex > MAX_MODE_NUM)
+	{
+		cout << "modeindex " << modeindex << " overflow" << endl;
+		return -1;
+	}
+	cout << "drop mode..." << endl;
+
+	char filepath[256] = {0};
+	sprintf(filepath, "%s%d.json", MODE_FILE, modeindex);
+
+	//delete the mode file
+	remove(filepath);
+}
+
 int EnableMode(Document& d)
 {
-	int modeindex = d["info"]["mode_seq"].GetInt();
+	int modeindex = d["info"]["mode_index"].GetInt();
 	if(modeindex > MAX_MODE_NUM)
 	{
 		cout << "modeindex " << modeindex << " overflow" << endl;
@@ -288,7 +328,7 @@ int EnableMode(Document& d)
 
 int DisableMode(Document& d)
 {
-	int modeindex = d["info"]["mode_seq"].GetInt();
+	int modeindex = d["info"]["mode_index"].GetInt();
 	if(modeindex > MAX_MODE_NUM)
 	{
 		cout << "modeindex " << modeindex << " overflow" << endl;
@@ -328,7 +368,7 @@ int DisableMode(Document& d)
 	}
 }
 
-int SendOrder(Document& d)
+int SendOrder(Document& d, Uart& uart)
 {
 	cout << "send order" << endl;
 	StringBuffer buffer;
@@ -336,10 +376,16 @@ int SendOrder(Document& d)
 	d.Accept(writer);
 
 	cout << buffer.GetString() << endl;
+	char order[256] = { 0 };
+	if(Json2Str(d, order) > 0)
+	{
+		cout << order;
+		uart.Write(order, strlen(order));
+	}
 	//UartSend(buffer.GetString);
 }
 
-int SendMode(int modeindex)
+int SendMode(int modeindex, Uart& uart)
 {
 	if(modeindex > MAX_MODE_NUM)
 	{
@@ -376,7 +422,7 @@ int SendMode(int modeindex)
 	{
 		Document d;
 		d.CopyFrom(*iter, d.GetAllocator());
-		SendOrder(d);
+		SendOrder(d, uart);
 	}
 }
 
@@ -468,5 +514,25 @@ int DeleteTrigger(Document& d)
 	{
 		cout << "write json to file error" << endl;
 		return -1;
+	}
+}
+
+int DocumentSerialize(Document& d, char* buffer, int len)
+{
+	if(d.IsNull())
+		return -1;
+
+	StringBuffer strbuffer;
+	Writer<StringBuffer, Document::EncodingType, ASCII<> > writer(strbuffer);
+	d.Accept(writer);
+
+	const char* str = strbuffer.GetString();
+	int strlength = strlen(str);
+	if(strlength > len)
+		return -1;
+	else
+	{
+		memcpy(buffer, str, strlength);
+		return strlength;
 	}
 }

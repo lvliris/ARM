@@ -151,6 +151,7 @@ int Uart::Write(char* data, int len)
 	if(data == NULL || fd == -1)
 		return -1;
 
+	cout << "write " << len << " bytes: " << data << " to " << fd << endl;
 	return write(fd, data, len);
 }
 
@@ -160,7 +161,7 @@ void Uart::Listening()
 	pthread_mutex_lock(&mutex);
 	int ret = pthread_create(&tid, 0, ReadingThread, this);
 	cout << "ret" << ret << endl;
-	pthread_join(tid, NULL);
+	//pthread_join(tid, NULL);
 }
 
 void* ReadingThread(void* arg)

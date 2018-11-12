@@ -1,0 +1,1 @@
+{"enable":true,"orders":[{"type":"0100","long_addr":"22222223","addr":"ABCE","opt":"send","info":{"act":"mod","state":"on","sub_seq":0,"mode_index":4,"data":"004*******FF"}},{"type":"0100","long_addr":"22222222","addr":"ABCD","opt":"send","info":{"act":"mod","state":"off","sub_seq":0,"mode_index":4,"data":"004*******FF"}}]}
