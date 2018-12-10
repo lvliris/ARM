@@ -1,10 +1,11 @@
 #include "orderparser.h"
 #include "converter.h"
+#include "devstate.h"
 #include <iostream>
 #include <string>
 #include <exception>
 
-#define MAX_MODE_NUM 20
+#define MAX_MODE_NUM 100
 
 using namespace rapidjson;
 using namespace std;
@@ -193,6 +194,7 @@ int ModifyModeOrder(Document& d)
 		{
 			find = true;
 			df["orders"][i]["info"]["state"] = d["info"]["state"];
+			debug_msg("find exist order\n");
 			break;
 		}
 	}
@@ -200,6 +202,7 @@ int ModifyModeOrder(Document& d)
 	//if the order was not found, add it
 	if(!find)
 	{
+		debug_msg("not found, add a new order\n");
 		int ret = AddModeOrder(d);
 		return ret;
 	}

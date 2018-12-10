@@ -3,10 +3,17 @@
 #include "httpclient.h"
 #include "converter.h"
 #include "orderpoll.h"
+#include "userpattern.h"
+#include "devstate.h"
+
 #include <stdlib.h>
-#include <iostream>
+#include <dirent.h>
+#include <sys/stat.h>
 #include <stdio.h>
 #include <string.h>
+
+#include <iostream>
+#include <vector>
 
 using namespace std;
 using namespace rapidjson;
@@ -58,31 +65,110 @@ int main(int argc, char* argv[])
     //ParseOrder(json[index]);
 
 	//uart.Init(57600, uartcallback);
-	char cmd[1024];
-	OrderPoll op;
-	/*HttpClient hc("AA00FF01");
-	hc.SetURL("http://101.201.211.87:8080/zfzn02/servlet/ElectricOrderServlet?masterCode=");
-	hc.SetCallBack(httpcallback);
-	hc.GetOrder();//*/
-	while(1)
+
+	struct timeval tv;
+	gettimeofday(&tv, NULL);
+	struct tm* t = localtime(&(tv.tv_sec));
+	char logfile[20] = {0};
+	sprintf(logfile, "%d-%d-%d.log", t->tm_year+1900, t->tm_mon+1, t->tm_mday);
+
+	char cmd[1024] = {0};
+	//OrderPoll op;
+	char* state[10];
+	state[0] = "<010012345678Z701********FF>";
+	state[1] = "<010022222222Z701********FF>";
+	state[2] = "<010012345678Z601********FF>";
+	state[3] = "<010022222222Z601********FF>";
+	state[4] = "<010011111111Z701********FF>";
+	state[5] = "<010033333333Z701********FF>";
+	state[6] = "<010011111111Z601********FF>";
+	state[7] = "<010033333333Z601********FF>";
+	Document d;
+	cout << "testing..." << endl;
+
+	/*string teststr;
+	State s;
+	DevState* ds = DevState::GetInstance();
+	cin >> teststr;
+	s = ds->GetState(teststr);
+	cout << s.type << ' ' << s.state << endl;
+	cin >> teststr;
+	s = ds->GetState(teststr);
+	cout << s.type << ' ' << s.state << endl;*/
+
+	int round = 0;
+	int date = 1;
+	char file_name[20] = {0};
+	/*while(round < 800)
 	{
-		cout << "runnin..." << endl;
-		sleep(5);
-		//hc.GetOrder();
-		/*sleep(1);
-		memset(cmd, 0, 1024);
-		cin.getline(cmd, 64);
-		cout << "send to uart: " << cmd << endl;
-		Document d;
-		cout << "string to json" << endl;
-		if(Str2Json(cmd, d) < 0)
+		debug_msg("sampling...\n");
+		if( Str2Json(state[round%8], d))
+		{
+			DevState* ds = DevState::GetInstance();
+			string addr = d["long_addr"].GetString();
+			int new_state = d["info"]["state"].GetInt();
+			State s(new_state);
+			ds->UpdateState(addr, s);
+			memset(cmd, 0, 1024);
+			DocumentSerialize(d, cmd, 1024);
+			cout << "state " << cmd << endl;
+			if(round % 80 == 0)
+			{
+				sprintf(file_name, "log/2018-11-%d.log", date++);
+			}
+			SaveHistory(cmd, file_name);
+		}
+		if(round%2)
+			sleep(3);
+		round++;
+	}//*/
+
+	ItemBasedCF icf;
+	/*DevState* ds = DevState::GetInstance();
+	string addr = "12345678";
+	State s("0300", "AAAA", 0);
+	ds->UpdateState(addr, s);*/
+	
+	//load the file
+	struct dirent *filename;
+	DIR *dir;
+	dir = opendir("log/");
+	while((filename = readdir(dir)) != NULL) 
+	//for(int i = 1; i <= 10; i++)
+	{
+		printf("load file %s\n", filename->d_name);
+		if(!strcmp(filename->d_name, ".") || !strcmp(filename->d_name, ".."))
+		{
 			continue;
-		cout << "serialize document:" << endl;
-		DocumentSerialize(d, cmd, 1024);
-		cout << cmd << "\nparse order" << endl;
-		ParseOrder(cmd);
-		Json2Str(d, cmd);
-		cout << cmd;
-		//uart.Write(cmd, strlen(cmd));//*/
+		}
+		//vector<vector<int> > data(200, vector<int>(5, 0));
+		//sprintf(file_name, "2018-11-%d.log", date++);
+		char* file_name = filename->d_name;
+		debug("%s\n", file_name);
+		//Vectorize(file_name, data);
+		icf.LoadData(file_name);
+
+		//perform pattern mining
+		icf.PatternMining();
+
+		//print the recognized patterns
+		vector<int> temp;
+		icf.Recommend(temp);
+	}
+
+	//load the second file
+	/*debug("2018-11-18.log");
+	Vectorize("2018-11-18.log", data);
+	icf.LoadData(data);*/
+
+
+	//save the patterns
+	printf("saving patterns...\n");
+	SavePatterns(icf.Patterns);
+
+	//hold on
+	while(true)
+	{
+		sleep(100);
 	}
 } 
