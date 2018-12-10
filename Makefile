@@ -35,11 +35,14 @@ CMAKE_COMMAND = /usr/bin/cmake
 # The command to remove a file.
 RM = /usr/bin/cmake -E remove -f
 
+# Escaping for special characters.
+EQUALS = =
+
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/topeet/Linux+QT/projects/master-host
+CMAKE_SOURCE_DIR = /data/projects/ARM
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/topeet/Linux+QT/projects/master-host
+CMAKE_BINARY_DIR = /data/projects/ARM
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -66,9 +69,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/topeet/Linux+QT/projects/master-host/CMakeFiles /home/topeet/Linux+QT/projects/master-host/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /data/projects/ARM/CMakeFiles /data/projects/ARM/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/topeet/Linux+QT/projects/master-host/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /data/projects/ARM/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -131,6 +134,30 @@ src/converter.s: src/converter.cpp.s
 src/converter.cpp.s:
 	$(MAKE) -f CMakeFiles/master.dir/build.make CMakeFiles/master.dir/src/converter.cpp.s
 .PHONY : src/converter.cpp.s
+
+src/devstate.o: src/devstate.cpp.o
+.PHONY : src/devstate.o
+
+# target to build an object file
+src/devstate.cpp.o:
+	$(MAKE) -f CMakeFiles/master.dir/build.make CMakeFiles/master.dir/src/devstate.cpp.o
+.PHONY : src/devstate.cpp.o
+
+src/devstate.i: src/devstate.cpp.i
+.PHONY : src/devstate.i
+
+# target to preprocess a source file
+src/devstate.cpp.i:
+	$(MAKE) -f CMakeFiles/master.dir/build.make CMakeFiles/master.dir/src/devstate.cpp.i
+.PHONY : src/devstate.cpp.i
+
+src/devstate.s: src/devstate.cpp.s
+.PHONY : src/devstate.s
+
+# target to generate assembly for a file
+src/devstate.cpp.s:
+	$(MAKE) -f CMakeFiles/master.dir/build.make CMakeFiles/master.dir/src/devstate.cpp.s
+.PHONY : src/devstate.cpp.s
 
 src/httpclient.o: src/httpclient.cpp.o
 .PHONY : src/httpclient.o
@@ -252,6 +279,30 @@ src/uart.cpp.s:
 	$(MAKE) -f CMakeFiles/master.dir/build.make CMakeFiles/master.dir/src/uart.cpp.s
 .PHONY : src/uart.cpp.s
 
+src/userpattern.o: src/userpattern.cpp.o
+.PHONY : src/userpattern.o
+
+# target to build an object file
+src/userpattern.cpp.o:
+	$(MAKE) -f CMakeFiles/master.dir/build.make CMakeFiles/master.dir/src/userpattern.cpp.o
+.PHONY : src/userpattern.cpp.o
+
+src/userpattern.i: src/userpattern.cpp.i
+.PHONY : src/userpattern.i
+
+# target to preprocess a source file
+src/userpattern.cpp.i:
+	$(MAKE) -f CMakeFiles/master.dir/build.make CMakeFiles/master.dir/src/userpattern.cpp.i
+.PHONY : src/userpattern.cpp.i
+
+src/userpattern.s: src/userpattern.cpp.s
+.PHONY : src/userpattern.s
+
+# target to generate assembly for a file
+src/userpattern.cpp.s:
+	$(MAKE) -f CMakeFiles/master.dir/build.make CMakeFiles/master.dir/src/userpattern.cpp.s
+.PHONY : src/userpattern.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -264,6 +315,9 @@ help:
 	@echo "... src/converter.o"
 	@echo "... src/converter.i"
 	@echo "... src/converter.s"
+	@echo "... src/devstate.o"
+	@echo "... src/devstate.i"
+	@echo "... src/devstate.s"
 	@echo "... src/httpclient.o"
 	@echo "... src/httpclient.i"
 	@echo "... src/httpclient.s"
@@ -279,6 +333,9 @@ help:
 	@echo "... src/uart.o"
 	@echo "... src/uart.i"
 	@echo "... src/uart.s"
+	@echo "... src/userpattern.o"
+	@echo "... src/userpattern.i"
+	@echo "... src/userpattern.s"
 .PHONY : help
 
 

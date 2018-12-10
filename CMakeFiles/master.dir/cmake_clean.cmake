@@ -1,10 +1,12 @@
 FILE(REMOVE_RECURSE
+  "CMakeFiles/master.dir/src/orderparser.cpp.o"
+  "CMakeFiles/master.dir/src/converter.cpp.o"
+  "CMakeFiles/master.dir/src/httpclient.cpp.o"
+  "CMakeFiles/master.dir/src/main.cpp.o"
+  "CMakeFiles/master.dir/src/userpattern.cpp.o"
   "CMakeFiles/master.dir/src/orderpoll.cpp.o"
   "CMakeFiles/master.dir/src/uart.cpp.o"
-  "CMakeFiles/master.dir/src/main.cpp.o"
-  "CMakeFiles/master.dir/src/httpclient.cpp.o"
-  "CMakeFiles/master.dir/src/converter.cpp.o"
-  "CMakeFiles/master.dir/src/orderparser.cpp.o"
+  "CMakeFiles/master.dir/src/devstate.cpp.o"
   "master.pdb"
   "master"
 )

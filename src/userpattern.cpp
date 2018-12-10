@@ -189,6 +189,7 @@ ItemBasedCF::ItemBasedCF()
 {
 	sThresh = 0.1;
 	lamda = 0.99;
+	LogIndex = 1;
 }
 
 ItemBasedCF::~ItemBasedCF()
@@ -251,10 +252,11 @@ void ItemBasedCF::UpdateSimilarity()
 
 	cout << "updating item-similarity\n";
 	//debug_msg("updating item-similarity\n");
-	//cout << "old:" << endl;
-	//PrintVector(sItemsAvg);
-	//cout << "new:" << endl;
-	//PrintVector(sItems);
+	cout << "old:" << endl;
+	PrintVector(sItemsAvg);
+	cout << "new:" << endl;
+	PrintVector(sItems);
+	//sleep(5);
 	
 	//update the similarity by move average
 	//1. fixed lamda
@@ -263,11 +265,8 @@ void ItemBasedCF::UpdateSimilarity()
 	{
 		for(int j = 0; j < new_size; j++)
 		{
-			if(sItemsAvg[i][j] + sItems[i][j] == 0)
-				lamda = 0.5;
-			else
-				lamda = sItemsAvg[i][j] / (sItemsAvg[i][j] + sItems[i][j]);
 			sItemsAvg[i][j] = lamda * sItemsAvg[i][j] + (1 - lamda) * sItems[i][j];
+			sItemsAvg[i][j] /= 1 - pow(lamda, LogIndex++);
 		}
 	}
 }
@@ -275,21 +274,21 @@ void ItemBasedCF::UpdateSimilarity()
 void ItemBasedCF::PatternMining()
 {
 	int items = sItems.size();
-	Vector_i flag(items, 1);
+	Vector_i visited(items, 0);
 	Patterns.clear();
 	for (int i = 0; i < items; i++)
 	{
-		if (!flag[i])
+		if (!visited[i])
 			continue;
 		q.push(i);
-		flag[i] = 0;
+		visited[i] = 1;
 		Vector_i neighbors(items, 0);
 		neighbors[i] = 1;
 		while (!q.empty())
 		{
 			int id = q.front();
-			flag[id] = 0;
-			FindSimilarNeighbors(id, neighbors);
+			visited[id] = 1;
+			FindSimilarNeighbors(id, neighbors, visited);
 			q.pop();
 		}
 
@@ -301,12 +300,12 @@ void ItemBasedCF::PatternMining()
 	}
 }
 
-void ItemBasedCF::FindSimilarNeighbors(int id, Vector_i &neighbors)
+void ItemBasedCF::FindSimilarNeighbors(int id, Vector_i &neighbors, Vector_i &visited)
 {
 	int items = sItems.size();
 	for (int i = 0; i < items; i++)
 	{
-		if (sItems[id][i] > sThresh)
+		if (sItems[id][i] > sThresh && !visited[i])
 		{
 			neighbors[i] = 1;
 			q.push(i);

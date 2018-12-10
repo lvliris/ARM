@@ -43,11 +43,14 @@ CMAKE_COMMAND = /usr/bin/cmake
 # The command to remove a file.
 RM = /usr/bin/cmake -E remove -f
 
+# Escaping for special characters.
+EQUALS = =
+
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/topeet/Linux+QT/projects/master-host
+CMAKE_SOURCE_DIR = /data/projects/ARM
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/topeet/Linux+QT/projects/master-host
+CMAKE_BINARY_DIR = /data/projects/ARM
 
 #=============================================================================
 # Target rules for target CMakeFiles/master.dir
@@ -56,7 +59,7 @@ CMAKE_BINARY_DIR = /home/topeet/Linux+QT/projects/master-host
 CMakeFiles/master.dir/all:
 	$(MAKE) -f CMakeFiles/master.dir/build.make CMakeFiles/master.dir/depend
 	$(MAKE) -f CMakeFiles/master.dir/build.make CMakeFiles/master.dir/build
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/topeet/Linux+QT/projects/master-host/CMakeFiles  1 2 3 4 5 6
+	$(CMAKE_COMMAND) -E cmake_progress_report /data/projects/ARM/CMakeFiles  1 2 3 4 5 6 7 8
 	@echo "Built target master"
 .PHONY : CMakeFiles/master.dir/all
 
@@ -66,9 +69,9 @@ all: CMakeFiles/master.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/master.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/topeet/Linux+QT/projects/master-host/CMakeFiles 6
+	$(CMAKE_COMMAND) -E cmake_progress_start /data/projects/ARM/CMakeFiles 8
 	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/master.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/topeet/Linux+QT/projects/master-host/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /data/projects/ARM/CMakeFiles 0
 .PHONY : CMakeFiles/master.dir/rule
 
 # Convenience name for target.

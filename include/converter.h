@@ -39,20 +39,21 @@ void SavePatterns(const std::vector<std::vector<int> > &patterns);
 template<typename DType>
 void PrintVector(std::vector<std::vector<DType> > &v)
 {
-	std::ofstream fout("output.txt");
+	//std::ofstream fout("output.txt");
 
     //std::cout << "-----------------------------------------------------" << std::endl;
     for (int i = 0; i < v.size(); i++)
     {
         for (int j = 0; j < v[i].size(); j++)
         {
-            //std::cout << std::left << std::setw(4) << std::setprecision(2)<< v[i][j] << ' ';
-			fout << std::left << std::setw(4) << std::setprecision(2)<< v[i][j] << ' ';
+            	std::cout << std::left << std::setw(4) << std::setprecision(2)<< v[i][j] << ' ';
+		//fout << std::left << std::setw(4) << std::setprecision(2)<< v[i][j] << ' ';
         }
-        fout << std::endl;
+	std::cout << std::endl;
+        //fout << std::endl;
     }
 
-    fout.close();
+    //fout.close();
 }
 
 

@@ -17,6 +17,7 @@ class CollaborativeFiltering
 public:
 	int UserSize;
 	int ItemSize;
+	int LogIndex;
 
 	float sThresh;	//similarity threshold
 	float lamda;	//parameter for moving average
@@ -94,7 +95,7 @@ public:
 	virtual void UpdateSimilarity();
 	virtual void PatternMining();
 	virtual Vector_i Recommend(Vector_i v);
-	virtual void FindSimilarNeighbors(int id, Vector_i &neighbors);
+	virtual void FindSimilarNeighbors(int id, Vector_i &neighbors, Vector_i &visited);
 	virtual bool ValidPattern(Vector_i pattern);
 
 	virtual void EuclidianDistance(ndVector_i UserData);

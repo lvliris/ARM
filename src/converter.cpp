@@ -553,19 +553,19 @@ void Vectorize(char* file_name, vector<vector<int> > &user_data)
 		int count = 0;
 		for(int j = 0; j < cols; j++)
 		{
-			user_data[i][j] += user_data[i+1][j];
+			//user_data[i][j] += user_data[i+1][j];
 			//set to 1 if it is bigger than 1
 			if(user_data[i][j] > 1)
 				user_data[i][j] = 1;
 			if(user_data[i][j] > 0)
 				count++;
 		}
-		/*if(count > 5)
+		if(count > 1)
 		{
 			for(int j = 0; j < cols; j++)
-				cout << user_data[i][j] << ' ';
+				cout << setw(2) << user_data[i][j] << ' ';
 			cout << endl;
-		}*/
+		}//*/
 	}
 	//PrintVector(user_data);
 }

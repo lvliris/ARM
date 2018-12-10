@@ -3,6 +3,7 @@
 
 CMakeFiles/master.dir/src/converter.cpp.o: src/converter.cpp
 CMakeFiles/master.dir/src/converter.cpp.o: include/converter.h
+CMakeFiles/master.dir/src/converter.cpp.o: include/devstate.h
 CMakeFiles/master.dir/src/converter.cpp.o: include/orderparser.h
 CMakeFiles/master.dir/src/converter.cpp.o: include/rapidjson/allocators.h
 CMakeFiles/master.dir/src/converter.cpp.o: include/rapidjson/document.h
@@ -11,11 +12,6 @@ CMakeFiles/master.dir/src/converter.cpp.o: include/rapidjson/encodings.h
 CMakeFiles/master.dir/src/converter.cpp.o: include/rapidjson/error/error.h
 CMakeFiles/master.dir/src/converter.cpp.o: include/rapidjson/filereadstream.h
 CMakeFiles/master.dir/src/converter.cpp.o: include/rapidjson/filewritestream.h
-CMakeFiles/master.dir/src/converter.cpp.o: include/rapidjson/internal/../allocators.h
-CMakeFiles/master.dir/src/converter.cpp.o: include/rapidjson/internal/../msinttypes/inttypes.h
-CMakeFiles/master.dir/src/converter.cpp.o: include/rapidjson/internal/../msinttypes/stdint.h
-CMakeFiles/master.dir/src/converter.cpp.o: include/rapidjson/internal/../rapidjson.h
-CMakeFiles/master.dir/src/converter.cpp.o: include/rapidjson/internal/../stream.h
 CMakeFiles/master.dir/src/converter.cpp.o: include/rapidjson/internal/biginteger.h
 CMakeFiles/master.dir/src/converter.cpp.o: include/rapidjson/internal/diyfp.h
 CMakeFiles/master.dir/src/converter.cpp.o: include/rapidjson/internal/dtoa.h
@@ -28,12 +24,46 @@ CMakeFiles/master.dir/src/converter.cpp.o: include/rapidjson/internal/strfunc.h
 CMakeFiles/master.dir/src/converter.cpp.o: include/rapidjson/internal/strtod.h
 CMakeFiles/master.dir/src/converter.cpp.o: include/rapidjson/internal/swap.h
 CMakeFiles/master.dir/src/converter.cpp.o: include/rapidjson/memorystream.h
+CMakeFiles/master.dir/src/converter.cpp.o: include/rapidjson/msinttypes/inttypes.h
+CMakeFiles/master.dir/src/converter.cpp.o: include/rapidjson/msinttypes/stdint.h
 CMakeFiles/master.dir/src/converter.cpp.o: include/rapidjson/rapidjson.h
 CMakeFiles/master.dir/src/converter.cpp.o: include/rapidjson/reader.h
 CMakeFiles/master.dir/src/converter.cpp.o: include/rapidjson/stream.h
 CMakeFiles/master.dir/src/converter.cpp.o: include/rapidjson/stringbuffer.h
 CMakeFiles/master.dir/src/converter.cpp.o: include/rapidjson/writer.h
 CMakeFiles/master.dir/src/converter.cpp.o: include/uart.h
+
+CMakeFiles/master.dir/src/devstate.cpp.o: src/devstate.cpp
+CMakeFiles/master.dir/src/devstate.cpp.o: include/converter.h
+CMakeFiles/master.dir/src/devstate.cpp.o: include/devstate.h
+CMakeFiles/master.dir/src/devstate.cpp.o: include/orderparser.h
+CMakeFiles/master.dir/src/devstate.cpp.o: include/rapidjson/allocators.h
+CMakeFiles/master.dir/src/devstate.cpp.o: include/rapidjson/document.h
+CMakeFiles/master.dir/src/devstate.cpp.o: include/rapidjson/encodedstream.h
+CMakeFiles/master.dir/src/devstate.cpp.o: include/rapidjson/encodings.h
+CMakeFiles/master.dir/src/devstate.cpp.o: include/rapidjson/error/error.h
+CMakeFiles/master.dir/src/devstate.cpp.o: include/rapidjson/filereadstream.h
+CMakeFiles/master.dir/src/devstate.cpp.o: include/rapidjson/filewritestream.h
+CMakeFiles/master.dir/src/devstate.cpp.o: include/rapidjson/internal/biginteger.h
+CMakeFiles/master.dir/src/devstate.cpp.o: include/rapidjson/internal/diyfp.h
+CMakeFiles/master.dir/src/devstate.cpp.o: include/rapidjson/internal/dtoa.h
+CMakeFiles/master.dir/src/devstate.cpp.o: include/rapidjson/internal/ieee754.h
+CMakeFiles/master.dir/src/devstate.cpp.o: include/rapidjson/internal/itoa.h
+CMakeFiles/master.dir/src/devstate.cpp.o: include/rapidjson/internal/meta.h
+CMakeFiles/master.dir/src/devstate.cpp.o: include/rapidjson/internal/pow10.h
+CMakeFiles/master.dir/src/devstate.cpp.o: include/rapidjson/internal/stack.h
+CMakeFiles/master.dir/src/devstate.cpp.o: include/rapidjson/internal/strfunc.h
+CMakeFiles/master.dir/src/devstate.cpp.o: include/rapidjson/internal/strtod.h
+CMakeFiles/master.dir/src/devstate.cpp.o: include/rapidjson/internal/swap.h
+CMakeFiles/master.dir/src/devstate.cpp.o: include/rapidjson/memorystream.h
+CMakeFiles/master.dir/src/devstate.cpp.o: include/rapidjson/msinttypes/inttypes.h
+CMakeFiles/master.dir/src/devstate.cpp.o: include/rapidjson/msinttypes/stdint.h
+CMakeFiles/master.dir/src/devstate.cpp.o: include/rapidjson/rapidjson.h
+CMakeFiles/master.dir/src/devstate.cpp.o: include/rapidjson/reader.h
+CMakeFiles/master.dir/src/devstate.cpp.o: include/rapidjson/stream.h
+CMakeFiles/master.dir/src/devstate.cpp.o: include/rapidjson/stringbuffer.h
+CMakeFiles/master.dir/src/devstate.cpp.o: include/rapidjson/writer.h
+CMakeFiles/master.dir/src/devstate.cpp.o: include/uart.h
 
 CMakeFiles/master.dir/src/httpclient.cpp.o: src/httpclient.cpp
 CMakeFiles/master.dir/src/httpclient.cpp.o: include/curl/curl.h
@@ -52,6 +82,7 @@ CMakeFiles/master.dir/src/main.cpp.o: include/curl/easy.h
 CMakeFiles/master.dir/src/main.cpp.o: include/curl/multi.h
 CMakeFiles/master.dir/src/main.cpp.o: include/curl/system.h
 CMakeFiles/master.dir/src/main.cpp.o: include/curl/typecheck-gcc.h
+CMakeFiles/master.dir/src/main.cpp.o: include/devstate.h
 CMakeFiles/master.dir/src/main.cpp.o: include/httpclient.h
 CMakeFiles/master.dir/src/main.cpp.o: include/orderparser.h
 CMakeFiles/master.dir/src/main.cpp.o: include/orderpoll.h
@@ -62,11 +93,6 @@ CMakeFiles/master.dir/src/main.cpp.o: include/rapidjson/encodings.h
 CMakeFiles/master.dir/src/main.cpp.o: include/rapidjson/error/error.h
 CMakeFiles/master.dir/src/main.cpp.o: include/rapidjson/filereadstream.h
 CMakeFiles/master.dir/src/main.cpp.o: include/rapidjson/filewritestream.h
-CMakeFiles/master.dir/src/main.cpp.o: include/rapidjson/internal/../allocators.h
-CMakeFiles/master.dir/src/main.cpp.o: include/rapidjson/internal/../msinttypes/inttypes.h
-CMakeFiles/master.dir/src/main.cpp.o: include/rapidjson/internal/../msinttypes/stdint.h
-CMakeFiles/master.dir/src/main.cpp.o: include/rapidjson/internal/../rapidjson.h
-CMakeFiles/master.dir/src/main.cpp.o: include/rapidjson/internal/../stream.h
 CMakeFiles/master.dir/src/main.cpp.o: include/rapidjson/internal/biginteger.h
 CMakeFiles/master.dir/src/main.cpp.o: include/rapidjson/internal/diyfp.h
 CMakeFiles/master.dir/src/main.cpp.o: include/rapidjson/internal/dtoa.h
@@ -79,15 +105,19 @@ CMakeFiles/master.dir/src/main.cpp.o: include/rapidjson/internal/strfunc.h
 CMakeFiles/master.dir/src/main.cpp.o: include/rapidjson/internal/strtod.h
 CMakeFiles/master.dir/src/main.cpp.o: include/rapidjson/internal/swap.h
 CMakeFiles/master.dir/src/main.cpp.o: include/rapidjson/memorystream.h
+CMakeFiles/master.dir/src/main.cpp.o: include/rapidjson/msinttypes/inttypes.h
+CMakeFiles/master.dir/src/main.cpp.o: include/rapidjson/msinttypes/stdint.h
 CMakeFiles/master.dir/src/main.cpp.o: include/rapidjson/rapidjson.h
 CMakeFiles/master.dir/src/main.cpp.o: include/rapidjson/reader.h
 CMakeFiles/master.dir/src/main.cpp.o: include/rapidjson/stream.h
 CMakeFiles/master.dir/src/main.cpp.o: include/rapidjson/stringbuffer.h
 CMakeFiles/master.dir/src/main.cpp.o: include/rapidjson/writer.h
 CMakeFiles/master.dir/src/main.cpp.o: include/uart.h
+CMakeFiles/master.dir/src/main.cpp.o: include/userpattern.h
 
 CMakeFiles/master.dir/src/orderparser.cpp.o: src/orderparser.cpp
 CMakeFiles/master.dir/src/orderparser.cpp.o: include/converter.h
+CMakeFiles/master.dir/src/orderparser.cpp.o: include/devstate.h
 CMakeFiles/master.dir/src/orderparser.cpp.o: include/orderparser.h
 CMakeFiles/master.dir/src/orderparser.cpp.o: include/rapidjson/allocators.h
 CMakeFiles/master.dir/src/orderparser.cpp.o: include/rapidjson/document.h
@@ -96,11 +126,6 @@ CMakeFiles/master.dir/src/orderparser.cpp.o: include/rapidjson/encodings.h
 CMakeFiles/master.dir/src/orderparser.cpp.o: include/rapidjson/error/error.h
 CMakeFiles/master.dir/src/orderparser.cpp.o: include/rapidjson/filereadstream.h
 CMakeFiles/master.dir/src/orderparser.cpp.o: include/rapidjson/filewritestream.h
-CMakeFiles/master.dir/src/orderparser.cpp.o: include/rapidjson/internal/../allocators.h
-CMakeFiles/master.dir/src/orderparser.cpp.o: include/rapidjson/internal/../msinttypes/inttypes.h
-CMakeFiles/master.dir/src/orderparser.cpp.o: include/rapidjson/internal/../msinttypes/stdint.h
-CMakeFiles/master.dir/src/orderparser.cpp.o: include/rapidjson/internal/../rapidjson.h
-CMakeFiles/master.dir/src/orderparser.cpp.o: include/rapidjson/internal/../stream.h
 CMakeFiles/master.dir/src/orderparser.cpp.o: include/rapidjson/internal/biginteger.h
 CMakeFiles/master.dir/src/orderparser.cpp.o: include/rapidjson/internal/diyfp.h
 CMakeFiles/master.dir/src/orderparser.cpp.o: include/rapidjson/internal/dtoa.h
@@ -113,6 +138,8 @@ CMakeFiles/master.dir/src/orderparser.cpp.o: include/rapidjson/internal/strfunc.
 CMakeFiles/master.dir/src/orderparser.cpp.o: include/rapidjson/internal/strtod.h
 CMakeFiles/master.dir/src/orderparser.cpp.o: include/rapidjson/internal/swap.h
 CMakeFiles/master.dir/src/orderparser.cpp.o: include/rapidjson/memorystream.h
+CMakeFiles/master.dir/src/orderparser.cpp.o: include/rapidjson/msinttypes/inttypes.h
+CMakeFiles/master.dir/src/orderparser.cpp.o: include/rapidjson/msinttypes/stdint.h
 CMakeFiles/master.dir/src/orderparser.cpp.o: include/rapidjson/rapidjson.h
 CMakeFiles/master.dir/src/orderparser.cpp.o: include/rapidjson/reader.h
 CMakeFiles/master.dir/src/orderparser.cpp.o: include/rapidjson/stream.h
@@ -138,11 +165,6 @@ CMakeFiles/master.dir/src/orderpoll.cpp.o: include/rapidjson/encodings.h
 CMakeFiles/master.dir/src/orderpoll.cpp.o: include/rapidjson/error/error.h
 CMakeFiles/master.dir/src/orderpoll.cpp.o: include/rapidjson/filereadstream.h
 CMakeFiles/master.dir/src/orderpoll.cpp.o: include/rapidjson/filewritestream.h
-CMakeFiles/master.dir/src/orderpoll.cpp.o: include/rapidjson/internal/../allocators.h
-CMakeFiles/master.dir/src/orderpoll.cpp.o: include/rapidjson/internal/../msinttypes/inttypes.h
-CMakeFiles/master.dir/src/orderpoll.cpp.o: include/rapidjson/internal/../msinttypes/stdint.h
-CMakeFiles/master.dir/src/orderpoll.cpp.o: include/rapidjson/internal/../rapidjson.h
-CMakeFiles/master.dir/src/orderpoll.cpp.o: include/rapidjson/internal/../stream.h
 CMakeFiles/master.dir/src/orderpoll.cpp.o: include/rapidjson/internal/biginteger.h
 CMakeFiles/master.dir/src/orderpoll.cpp.o: include/rapidjson/internal/diyfp.h
 CMakeFiles/master.dir/src/orderpoll.cpp.o: include/rapidjson/internal/dtoa.h
@@ -155,6 +177,8 @@ CMakeFiles/master.dir/src/orderpoll.cpp.o: include/rapidjson/internal/strfunc.h
 CMakeFiles/master.dir/src/orderpoll.cpp.o: include/rapidjson/internal/strtod.h
 CMakeFiles/master.dir/src/orderpoll.cpp.o: include/rapidjson/internal/swap.h
 CMakeFiles/master.dir/src/orderpoll.cpp.o: include/rapidjson/memorystream.h
+CMakeFiles/master.dir/src/orderpoll.cpp.o: include/rapidjson/msinttypes/inttypes.h
+CMakeFiles/master.dir/src/orderpoll.cpp.o: include/rapidjson/msinttypes/stdint.h
 CMakeFiles/master.dir/src/orderpoll.cpp.o: include/rapidjson/rapidjson.h
 CMakeFiles/master.dir/src/orderpoll.cpp.o: include/rapidjson/reader.h
 CMakeFiles/master.dir/src/orderpoll.cpp.o: include/rapidjson/stream.h
@@ -164,4 +188,36 @@ CMakeFiles/master.dir/src/orderpoll.cpp.o: include/uart.h
 
 CMakeFiles/master.dir/src/uart.cpp.o: src/uart.cpp
 CMakeFiles/master.dir/src/uart.cpp.o: include/uart.h
+
+CMakeFiles/master.dir/src/userpattern.cpp.o: src/userpattern.cpp
+CMakeFiles/master.dir/src/userpattern.cpp.o: include/converter.h
+CMakeFiles/master.dir/src/userpattern.cpp.o: include/orderparser.h
+CMakeFiles/master.dir/src/userpattern.cpp.o: include/rapidjson/allocators.h
+CMakeFiles/master.dir/src/userpattern.cpp.o: include/rapidjson/document.h
+CMakeFiles/master.dir/src/userpattern.cpp.o: include/rapidjson/encodedstream.h
+CMakeFiles/master.dir/src/userpattern.cpp.o: include/rapidjson/encodings.h
+CMakeFiles/master.dir/src/userpattern.cpp.o: include/rapidjson/error/error.h
+CMakeFiles/master.dir/src/userpattern.cpp.o: include/rapidjson/filereadstream.h
+CMakeFiles/master.dir/src/userpattern.cpp.o: include/rapidjson/filewritestream.h
+CMakeFiles/master.dir/src/userpattern.cpp.o: include/rapidjson/internal/biginteger.h
+CMakeFiles/master.dir/src/userpattern.cpp.o: include/rapidjson/internal/diyfp.h
+CMakeFiles/master.dir/src/userpattern.cpp.o: include/rapidjson/internal/dtoa.h
+CMakeFiles/master.dir/src/userpattern.cpp.o: include/rapidjson/internal/ieee754.h
+CMakeFiles/master.dir/src/userpattern.cpp.o: include/rapidjson/internal/itoa.h
+CMakeFiles/master.dir/src/userpattern.cpp.o: include/rapidjson/internal/meta.h
+CMakeFiles/master.dir/src/userpattern.cpp.o: include/rapidjson/internal/pow10.h
+CMakeFiles/master.dir/src/userpattern.cpp.o: include/rapidjson/internal/stack.h
+CMakeFiles/master.dir/src/userpattern.cpp.o: include/rapidjson/internal/strfunc.h
+CMakeFiles/master.dir/src/userpattern.cpp.o: include/rapidjson/internal/strtod.h
+CMakeFiles/master.dir/src/userpattern.cpp.o: include/rapidjson/internal/swap.h
+CMakeFiles/master.dir/src/userpattern.cpp.o: include/rapidjson/memorystream.h
+CMakeFiles/master.dir/src/userpattern.cpp.o: include/rapidjson/msinttypes/inttypes.h
+CMakeFiles/master.dir/src/userpattern.cpp.o: include/rapidjson/msinttypes/stdint.h
+CMakeFiles/master.dir/src/userpattern.cpp.o: include/rapidjson/rapidjson.h
+CMakeFiles/master.dir/src/userpattern.cpp.o: include/rapidjson/reader.h
+CMakeFiles/master.dir/src/userpattern.cpp.o: include/rapidjson/stream.h
+CMakeFiles/master.dir/src/userpattern.cpp.o: include/rapidjson/stringbuffer.h
+CMakeFiles/master.dir/src/userpattern.cpp.o: include/rapidjson/writer.h
+CMakeFiles/master.dir/src/userpattern.cpp.o: include/uart.h
+CMakeFiles/master.dir/src/userpattern.cpp.o: include/userpattern.h
 
