@@ -43,27 +43,6 @@ size_t httpcallback(void* ptr, size_t size, size_t nmemb, void* stream)
 
 int main(int argc, char* argv[])
 {   
-    char* json[10];
-    json[0] = "{\"long_addr\": \"12345678\",\"opt\":\"set\", \"info\":{\"act\":\"add\",\"mode_seq\":1, \"sub_seq\":1, \"state\": \"off\"}}";
-
-    json[1] = "{\"long_addr\": \"12345678\",\"opt\":\"set\", \"info\":{\"act\":\"mod\",\"mode_seq\":1, \"sub_seq\":1, \"state\": \"on\"}}";
-
-    json[2] = "{\"long_addr\": \"12345678\",\"opt\":\"set\", \"info\":{\"act\":\"del\",\"mode_seq\":1, \"sub_seq\":1, \"state\": \"off\"}}";
-
-    json[3] = "{\"long_addr\": \"12345678\",\"opt\":\"set\", \"info\":{\"act\":\"enable\",\"mode_seq\":1, \"sub_seq\":1, \"state\": \"off\"}}";
-
-    json[4] = "{\"long_addr\": \"12345678\",\"opt\":\"set\", \"info\":{\"act\":\"disable\",\"mode_seq\":1, \"sub_seq\":1, \"state\": \"off\"}}";
-
-    json[5] = "{\"long_addr\": \"12345678\",\"opt\":\"send\", \"info\":{\"act\":\"disable\",\"mode_seq\":1, \"sub_seq\":1, \"state\": \"off\"}}";
-
-    json[6] = "{\"long_addr\": \"12345678\",\"opt\":\"set\", \"info\":{\"act\":\"trigger\",\"mode_index\":1, \"sub_seq\":1, \"state\": \"off\"}}";
-
-    json[7] = "{\"long_addr\": \"12345678\",\"opt\":\"set\", \"info\":{\"act\":\"distrigger\",\"sub_seq\":1, \"state\": \"off\"}}";
-    
-    //int index = atoi(argv[1]); 
-	//cout << json[index] << endl;
-    //ParseOrder(json[index]);
-
 	//uart.Init(57600, uartcallback);
 
 	struct timeval tv;
@@ -72,80 +51,43 @@ int main(int argc, char* argv[])
 	char logfile[20] = {0};
 	sprintf(logfile, "%d-%d-%d.log", t->tm_year+1900, t->tm_mon+1, t->tm_mday);
 
-	char cmd[1024] = {0};
 	//OrderPoll op;
-	char* state[10];
-	state[0] = "<010012345678Z701********FF>";
-	state[1] = "<010022222222Z701********FF>";
-	state[2] = "<010012345678Z601********FF>";
-	state[3] = "<010022222222Z601********FF>";
-	state[4] = "<010011111111Z701********FF>";
-	state[5] = "<010033333333Z701********FF>";
-	state[6] = "<010011111111Z601********FF>";
-	state[7] = "<010033333333Z601********FF>";
-	Document d;
-	cout << "testing..." << endl;
 
-	/*string teststr;
-	State s;
-	DevState* ds = DevState::GetInstance();
-	cin >> teststr;
-	s = ds->GetState(teststr);
-	cout << s.type << ' ' << s.state << endl;
-	cin >> teststr;
-	s = ds->GetState(teststr);
-	cout << s.type << ' ' << s.state << endl;*/
-
-	int round = 0;
-	int date = 1;
-	char file_name[20] = {0};
-	/*while(round < 800)
+	vector<vector<int> > modes;
+	for(int i = 0; i < 3; i++)
 	{
-		debug_msg("sampling...\n");
-		if( Str2Json(state[round%8], d))
-		{
-			DevState* ds = DevState::GetInstance();
-			string addr = d["long_addr"].GetString();
-			int new_state = d["info"]["state"].GetInt();
-			State s(new_state);
-			ds->UpdateState(addr, s);
-			memset(cmd, 0, 1024);
-			DocumentSerialize(d, cmd, 1024);
-			cout << "state " << cmd << endl;
-			if(round % 80 == 0)
-			{
-				sprintf(file_name, "log/2018-11-%d.log", date++);
-			}
-			SaveHistory(cmd, file_name);
-		}
-		if(round%2)
-			sleep(3);
-		round++;
-	}//*/
+		vector<int> mode;
+		char mode_path[50] = {0};
+		sprintf(mode_path, "config/mode%d.json", i);
+		mode = ReadModeFromFile(mode_path);
+		modes.push_back(mode);
+	}
+	cout << "----------mode gt----------" << endl;
+	PrintVector(modes);
+	sleep(3);
 
 	ItemBasedCF icf;
-	/*DevState* ds = DevState::GetInstance();
-	string addr = "12345678";
-	State s("0300", "AAAA", 0);
-	ds->UpdateState(addr, s);*/
 	
-	//load the file
+	//load the log files
 	struct dirent *filename;
 	DIR *dir;
+	int iter = 0;
+	Document df;
+	Value precision(kArrayType);
+	Value recall(kArrayType);
+	df.SetObject();
+
 	dir = opendir("log/");
 	while((filename = readdir(dir)) != NULL) 
-	//for(int i = 1; i <= 10; i++)
 	{
-		printf("load file %s\n", filename->d_name);
+		//skip the . and ..
 		if(!strcmp(filename->d_name, ".") || !strcmp(filename->d_name, ".."))
 		{
 			continue;
 		}
-		//vector<vector<int> > data(200, vector<int>(5, 0));
-		//sprintf(file_name, "2018-11-%d.log", date++);
+		//loading file
 		char* file_name = filename->d_name;
-		debug("%s\n", file_name);
-		//Vectorize(file_name, data);
+		debug("loading file: %s\n", file_name);
 		icf.LoadData(file_name);
 
 		//perform pattern mining
@@ -153,16 +95,33 @@ int main(int argc, char* argv[])
 
 		//print the recognized patterns
 		vector<int> temp;
-		icf.Recommend(temp);
+		//icf.Recommend(temp);
+
+		//evaluate the result
+		vector<float> res;
+		res = RecognitionEvaluate(icf.Patterns, modes);
+		if(!res.empty())
+		{
+			precision.PushBack(res[0], df.GetAllocator());
+			recall.PushBack(res[1], df.GetAllocator());
+		}
+		else
+		{
+			precision.PushBack(0.0, df.GetAllocator());
+			recall.PushBack(0.0, df.GetAllocator());
+		}
+		cout << "iteration " << iter++ << ": precison and recall-" << res[0] << ',' << res[1] << endl;
 	}
 
-	//load the second file
-	/*debug("2018-11-18.log");
-	Vectorize("2018-11-18.log", data);
-	icf.LoadData(data);*/
+	df.AddMember("precision", precision, df.GetAllocator());
+	df.AddMember("recall", recall, df.GetAllocator());
 
+	if(WriteJsonToFile(df, "config/evaluation.json") > 0)
+	{
+		cout << "write evaluation result to file success!!!" << endl;
+	}
 
-	//save the patterns
+	//save the final patterns
 	printf("saving patterns...\n");
 	SavePatterns(icf.Patterns);
 

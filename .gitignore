@@ -1,4 +1,6 @@
 CMakeFiles/
+config/
 log/
 CMakeCache.txt
 cmake_install.cmake
+master

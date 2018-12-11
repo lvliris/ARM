@@ -666,3 +666,90 @@ void SavePatterns(const vector<vector<int> > &patterns)
 	}
 }
 
+vector<int> ReadModeFromFile(char* file_name)
+{
+	//read the mode from the json file
+	Document df;
+	if(ReadJsonFromFile(df, file_name) < 0)
+	{
+		cout << "read mode file failed" << endl;
+	}
+
+	//iterate the mode, return a vector that represents the mode
+	map<string, int> addr_index = MapAddr2Index();
+	int dev_num = addr_index.size();
+	vector<int> mode(dev_num, 0);
+	string sub[3] = {"1", "2", "3"};
+	for(SizeType i = 0; i < df["orders"].Size(); i++)
+	{
+		string long_addr = df["orders"][i]["long_addr"].GetString();
+		int sub_index = df["orders"][i]["info"]["sub_seq"].GetInt() - 1;
+		int dev_index = addr_index[long_addr + sub[sub_index]];
+		cout << "mode order addr: " << long_addr << ' ' << dev_index << endl;
+		mode[dev_index] = 1;
+	}
+
+	return mode;
+}
+
+vector<float> RecognitionEvaluate(vector<vector<int> > &patterns, vector<vector<int> > &modes)
+{
+	//cout << "evaluating..." << endl;
+	//vector to save [precison, recall]
+	vector<float> res(2);
+	if(patterns.empty() || patterns[0].size() != modes[0].size())
+	{
+		cout << "error: empty patterns or different device number" << endl;
+		return res;
+	}
+	int num_reg = patterns.size();
+	int num_gt = modes.size();
+	int num_dev = patterns[0].size();
+
+	int num_pred = 0;
+	int num_right = 0;
+	int num_gt_dev = 0;
+
+	//calculate the similarity between each recognized pattern and ground truth mode
+	vector<vector<int> > result(num_reg, vector<int>(num_gt, 0));
+	for(int i = 0; i < num_reg; i++)
+	{
+		for(int j = 0; j < num_gt; j++)
+		{
+			int count = 0;
+			for(int k = 0; k < num_dev; k++)
+			{
+				num_pred += patterns[i][k];
+				num_gt_dev += modes[j][k];
+				count += (patterns[i][k] & modes[j][k]);
+			}
+			result[i][j] = count;
+		}
+	}
+
+	//divide by the repeated count
+	num_pred /= num_gt;
+	num_gt_dev /= num_reg;
+	cout << "num_pred, num_gt_dev " << num_pred << ',' << num_gt_dev << endl;
+
+	//As for one specific mode, one of the recognized patterns which has the greatest
+	//similarity with the mode is seen as the identical pattern to the mode
+	for(int i = 0; i < num_gt; i++)
+	{
+		int max_count = 0;
+		for(int j = 0; j < num_reg; j++)
+		{
+			if(result[j][i] > max_count)
+			{
+				max_count = result[j][i];
+			}
+		}
+		num_right += max_count;
+	}
+
+	res[0] = num_right * 1.0 / num_pred;
+	res[1] = num_right * 1.0 / num_gt_dev;
+
+	return res;
+}
+

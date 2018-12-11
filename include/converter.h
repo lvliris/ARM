@@ -36,10 +36,14 @@ void Vectorize(char* file_name, std::vector<std::vector<int> >&user_data);
 
 void SavePatterns(const std::vector<std::vector<int> > &patterns);
 
+std::vector<int> ReadModeFromFile(char* file_name);
+
+std::vector<float> RecognitionEvaluate(std::vector<std::vector<int> > &patterns, std::vector<std::vector<int> > &modes);
+
 template<typename DType>
 void PrintVector(std::vector<std::vector<DType> > &v)
 {
-	//std::ofstream fout("output.txt");
+	std::ofstream fout("output.txt");
 
     //std::cout << "-----------------------------------------------------" << std::endl;
     for (int i = 0; i < v.size(); i++)
@@ -47,10 +51,10 @@ void PrintVector(std::vector<std::vector<DType> > &v)
         for (int j = 0; j < v[i].size(); j++)
         {
             	std::cout << std::left << std::setw(4) << std::setprecision(2)<< v[i][j] << ' ';
-		//fout << std::left << std::setw(4) << std::setprecision(2)<< v[i][j] << ' ';
+		fout << std::left << std::setw(4) << std::setprecision(2)<< v[i][j] << ' ';
         }
 	std::cout << std::endl;
-        //fout << std::endl;
+        fout << std::endl;
     }
 
     //fout.close();

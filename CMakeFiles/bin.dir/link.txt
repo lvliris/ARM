@@ -1,1 +1,0 @@
-/usr/bin/c++       CMakeFiles/./bin.dir/src/main.cpp.o CMakeFiles/./bin.dir/src/orderparser.cpp.o  -o ./bin -rdynamic 

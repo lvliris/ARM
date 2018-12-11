@@ -207,7 +207,7 @@ void ItemBasedCF::LoadData(char* file)
 	UserSize = hours_of_day * seconds_of_hour / TIME_QUANT;
 	ItemSize = addr_index.size();
 	//debug_msg("vector size: %d,%d\n", UserSize, ItemSize);
-	cout << "vector size: " << UserSize << ' ' << ItemSize << endl;
+	//cout << "vector size: " << UserSize << ' ' << ItemSize << endl;
 
 	//vectorize the log file
 	vector<vector<int> > UserData(UserSize, Vector_i(ItemSize, 0));
@@ -223,7 +223,7 @@ void ItemBasedCF::LoadData(char* file)
 	UpdateSimilarity();
 
 	//debug
-	PrintVector(sItemsAvg);
+	//PrintVector(sItemsAvg);
 }
 
 void ItemBasedCF::UpdateSimilarity()
@@ -250,7 +250,7 @@ void ItemBasedCF::UpdateSimilarity()
 		Resize(sItemsAvg, new_size, new_size);
 	}
 
-	cout << "updating item-similarity\n";
+	//cout << "updating item-similarity\n";
 	//debug_msg("updating item-similarity\n");
 	/*cout << "old:" << endl;
 	PrintVector(sItemsAvg);
