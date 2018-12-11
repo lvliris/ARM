@@ -1,4 +1,3 @@
-#include "converter.h"
 #include "devstate.h"
 #include <string>
 #include <fstream>
@@ -494,8 +493,10 @@ void Vectorize(char* file_name, vector<vector<int> > &user_data)
 	//read the history entries
 	char entry[1024];
 	int time_index = 0;
+	int last_time_index = 0;
 	int dev_index = 0;
 	int data_size = user_data.size();
+	int dev_num = user_data[0].size();
 	while(!lin.eof())
 	{
 		memset(entry, 0, 1024);
@@ -531,13 +532,23 @@ void Vectorize(char* file_name, vector<vector<int> > &user_data)
 			return;
 		}
 
+		for(int i = last_time_index; i < time_index; i++)
+		{
+			for(int j = 0; j < dev_num; j++)
+			{
+				user_data[i+1][j] = user_data[i][j];
+			}
+		}
+
+		last_time_index = time_index;
+
 		if(state & (1 << sub_seq))
 		{
 			user_data[time_index][dev_index] = 1;
 		}
 		else
 		{
-			user_data[time_index][dev_index] = -1;
+			user_data[time_index][dev_index] = 0;
 		}
 
 		//cout << "index: " << time_index << ' ' << dev_index << endl;
@@ -560,7 +571,7 @@ void Vectorize(char* file_name, vector<vector<int> > &user_data)
 			if(user_data[i][j] > 0)
 				count++;
 		}
-		if(count > 1)
+		/*if(count > 1)
 		{
 			for(int j = 0; j < cols; j++)
 				cout << setw(2) << user_data[i][j] << ' ';

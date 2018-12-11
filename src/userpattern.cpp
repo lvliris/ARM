@@ -187,8 +187,8 @@ void UserBasedCF::CosSimilarityDistance(ndVector_i v)
 
 ItemBasedCF::ItemBasedCF()
 {
-	sThresh = 0.1;
-	lamda = 0.99;
+	sThresh = 0.3;
+	lamda = 0.8;
 	LogIndex = 1;
 }
 
@@ -223,13 +223,13 @@ void ItemBasedCF::LoadData(char* file)
 	UpdateSimilarity();
 
 	//debug
-	//PrintVector(sItemsAvg);
+	PrintVector(sItemsAvg);
 }
 
 void ItemBasedCF::UpdateSimilarity()
 {
 	int new_size = sItems.size();
-	if(sItemsAvg.empty())
+	/*if(sItemsAvg.empty())
 	{
 		//debug_msg("items similarities empty, initializing...\n");
 		cout << "items similarities empty, initializing...\n";
@@ -243,7 +243,7 @@ void ItemBasedCF::UpdateSimilarity()
 			}
 		}
 		return;
-	}
+	}*/
 	
 	if(sItemsAvg.size() != new_size)
 	{
@@ -252,11 +252,11 @@ void ItemBasedCF::UpdateSimilarity()
 
 	cout << "updating item-similarity\n";
 	//debug_msg("updating item-similarity\n");
-	cout << "old:" << endl;
+	/*cout << "old:" << endl;
 	PrintVector(sItemsAvg);
 	cout << "new:" << endl;
 	PrintVector(sItems);
-	//sleep(5);
+	sleep(5);*/
 	
 	//update the similarity by move average
 	//1. fixed lamda
@@ -265,10 +265,16 @@ void ItemBasedCF::UpdateSimilarity()
 	{
 		for(int j = 0; j < new_size; j++)
 		{
+			//sItemsAvg[i][j] = lamda * sItemsAvg[i][j] + (1 - lamda)/(1 - pow(lamda, LogIndex)) * sItems[i][j];
+			//sItemsAvg[i][j] = lamda * sItemsAvg[i][j] + (1 - lamda) * sItems[i][j];
 			sItemsAvg[i][j] = lamda * sItemsAvg[i][j] + (1 - lamda) * sItems[i][j];
-			sItemsAvg[i][j] /= 1 - pow(lamda, LogIndex++);
+			if(sItemsAvg[i][j] > 1)
+			{
+				sItemsAvg[i][j] = 1;
+			}
 		}
 	}
+	LogIndex++;
 }
 
 void ItemBasedCF::PatternMining()
@@ -278,7 +284,7 @@ void ItemBasedCF::PatternMining()
 	Patterns.clear();
 	for (int i = 0; i < items; i++)
 	{
-		if (!visited[i])
+		if (visited[i])
 			continue;
 		q.push(i);
 		visited[i] = 1;
@@ -305,7 +311,7 @@ void ItemBasedCF::FindSimilarNeighbors(int id, Vector_i &neighbors, Vector_i &vi
 	int items = sItems.size();
 	for (int i = 0; i < items; i++)
 	{
-		if (sItems[id][i] > sThresh && !visited[i])
+		if (sItemsAvg[id][i] > sThresh && !visited[i])
 		{
 			neighbors[i] = 1;
 			q.push(i);

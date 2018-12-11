@@ -1,6 +1,7 @@
 #include "devstate.h"
 #include <iostream>
 #include <fstream>
+#include <vector>
 #include <time.h>
 #include <pthread.h>
 #include <sys/io.h>
@@ -161,6 +162,11 @@ struct State DevState::GetState(string long_addr)
 		return istate;
 	}
 }
+
+/*vector<int> DevState::GetState()
+{
+	
+}*/
 
 int DevState::UpdateState(string long_addr, struct State& state)
 {
