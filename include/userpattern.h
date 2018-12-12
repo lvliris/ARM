@@ -5,6 +5,7 @@
 #include <iomanip>
 #include <vector>
 #include <queue>
+#include <map>
 
 typedef std::vector<float> Vector_f;
 typedef std::vector<int> Vector_i;
@@ -22,6 +23,8 @@ public:
 	float sThresh;	//similarity threshold
 	float lamda;	//parameter for moving average
 
+	ndVector_i UserData;		//vectorized user data
+	
 	ndVector_f eDistance;		//Euclidian distance
 	ndVector_f eSimilarity;		//Euclidian similarity
 
@@ -52,7 +55,7 @@ public:
 
 	virtual void EuclidianDistance(ndVector_i UserData);
 	virtual float EuclidianSimilarity(float dist);
-	virtual void CosDistance(ndVector_i UserData);
+	virtual void CosDistance(Vector_i &x, Vector_i &y);
 	virtual void CosSimilarityDistance(ndVector_i UserData);
 };
 
@@ -60,19 +63,32 @@ public:
 class UserBasedCF : public CollaborativeFiltering
 {
 public:
+	float tThresh;
+	//a map recording user's habits, time: pattern_index
+	std::map<int, int> Habits;
+	
 	UserBasedCF();
 	~UserBasedCF();
 
 	ndVector_f sUsers;
+	//average execute times of all patterns
+	Vector_i PatternTimesMean;
+	//execute time variance
+	Vector_f PatternTimesVar;
 
 	virtual void LoadData(ndVector_i UserData);
 
+	//find the habit of the user according to the time variance of each pattern, remove the redundent patterns
 	virtual void PatternMining();
 
 	virtual void FindSimilarNeighbors(int id, Vector_i &neighbors);
+	
+	//find the execute time of each pattern
+	virtual void FindPatternTime(ndVector_i&, ndVector_i&);
+	
 	virtual bool ValidPattern(Vector_i pattern);
 
-	virtual Vector_i Recommend(Vector_i v);
+	virtual Vector_i Recommend(int t);
 
 	virtual void EuclidianDistance(ndVector_i UserData);
 	virtual void CosDistance(ndVector_i UserData);

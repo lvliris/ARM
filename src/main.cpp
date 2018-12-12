@@ -67,6 +67,7 @@ int main(int argc, char* argv[])
 	sleep(3);
 
 	ItemBasedCF icf;
+	UserBasedCF ucf;
 	
 	//load the log files
 	struct dirent *filename;
@@ -92,10 +93,15 @@ int main(int argc, char* argv[])
 
 		//perform pattern mining
 		icf.PatternMining();
+		ucf.PatternMining();
 
 		//print the recognized patterns
 		vector<int> temp;
 		icf.Recommend(temp);
+		ucf.Recommend(0);
+		
+		//perform habit mining
+		ucf.FindPatternTime(icf.Patterns, icf.UserData);
 
 		//evaluate the result
 		vector<float> res;
@@ -120,6 +126,10 @@ int main(int argc, char* argv[])
 	{
 		cout << "write evaluation result to file success!!!" << endl;
 	}
+	
+	//find the habit
+	ucf.PatternMining();
+	ucf.Recommend(0);
 
 	//save the final patterns
 	printf("saving patterns...\n");
