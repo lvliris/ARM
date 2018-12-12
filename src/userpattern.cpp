@@ -188,7 +188,7 @@ void UserBasedCF::CosSimilarityDistance(ndVector_i v)
 ItemBasedCF::ItemBasedCF()
 {
 	sThresh = 0.3;
-	lamda = 0.8;
+	lamda = 0.95;
 	LogIndex = 1;
 }
 

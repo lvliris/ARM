@@ -730,7 +730,7 @@ vector<float> RecognitionEvaluate(vector<vector<int> > &patterns, vector<vector<
 	//divide by the repeated count
 	num_pred /= num_gt;
 	num_gt_dev /= num_reg;
-	cout << "num_pred, num_gt_dev " << num_pred << ',' << num_gt_dev << endl;
+	cout << "patters_pred, num_pred, num_gt_dev " << num_reg << ',' << num_pred << ',' << num_gt_dev << endl;
 
 	//As for one specific mode, one of the recognized patterns which has the greatest
 	//similarity with the mode is seen as the identical pattern to the mode

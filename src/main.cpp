@@ -54,7 +54,7 @@ int main(int argc, char* argv[])
 	//OrderPoll op;
 
 	vector<vector<int> > modes;
-	for(int i = 0; i < 3; i++)
+	for(int i = 0; i < 10; i++)
 	{
 		vector<int> mode;
 		char mode_path[50] = {0};
@@ -95,7 +95,7 @@ int main(int argc, char* argv[])
 
 		//print the recognized patterns
 		vector<int> temp;
-		//icf.Recommend(temp);
+		icf.Recommend(temp);
 
 		//evaluate the result
 		vector<float> res;
