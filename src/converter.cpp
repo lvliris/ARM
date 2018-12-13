@@ -497,6 +497,10 @@ void Vectorize(char* file_name, vector<vector<int> > &user_data)
 	int dev_index = 0;
 	int data_size = user_data.size();
 	int dev_num = user_data[0].size();
+	for(int i = 0; i < dev_num; i++)
+	{
+		user_data[0][i] = 0;
+	}
 	while(!lin.eof())
 	{
 		memset(entry, 0, 1024);
@@ -753,3 +757,27 @@ vector<float> RecognitionEvaluate(vector<vector<int> > &patterns, vector<vector<
 	return res;
 }
 
+float RecognitionEvaluate(vector<int> &habit_time_reg, vector<int> &habit_time_gt)
+{
+	int num_gt = habit_time_gt.size();
+	int num_reg = habit_time_reg.size();
+
+	//As for one specific mode, one of the recognized patterns which has the greatest
+	//similarity with the mode is seen as the identical pattern to the mode
+	float total_var = 0;
+	for(int i = 0; i < num_reg; i++)
+	{
+		int min_var = (1 << 31) - 1;
+		for(int j = 0; j < num_gt; j++)
+		{
+			int result = abs(habit_time_reg[i] - habit_time_gt[j]);
+			if(result < min_var)
+			{
+				min_var = result;
+			}
+		}
+		total_var += min_var;
+	}
+
+	return total_var / num_reg;
+}

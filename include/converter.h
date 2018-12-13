@@ -38,7 +38,11 @@ void SavePatterns(const std::vector<std::vector<int> > &patterns);
 
 std::vector<int> ReadModeFromFile(char* file_name);
 
+//Evaluate the precision and recall of recognized patterns
 std::vector<float> RecognitionEvaluate(std::vector<std::vector<int> > &patterns, std::vector<std::vector<int> > &modes);
+
+//Evaluate the time variance of haibit modes
+float RecognitionEvaluate(std::vector<int> &habit_time_reg, std::vector<int> &habit_time_gt);
 
 template<typename DType>
 void PrintVector(std::vector<std::vector<DType> > &v)
@@ -50,7 +54,7 @@ void PrintVector(std::vector<std::vector<DType> > &v)
     {
         for (int j = 0; j < v[i].size(); j++)
         {
-            	std::cout << std::left << std::setw(4) << std::setprecision(2)<< v[i][j] << ' ';
+            	std::cout << std::left << std::setw(1) << std::setprecision(2)<< v[i][j] << ' ';
 		fout << std::left << std::setw(4) << std::setprecision(2)<< v[i][j] << ' ';
         }
 	std::cout << std::endl;

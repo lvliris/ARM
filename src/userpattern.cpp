@@ -21,7 +21,10 @@ void Resize(vector<vector<DType> > &data, int rows, int cols)
 
 CollaborativeFiltering::CollaborativeFiltering()
 {
-
+	const int hours_of_day = 24;
+	const int seconds_of_hour = 3600;
+	UserSize = hours_of_day * seconds_of_hour / TIME_QUANT;
+	ItemSize = 0;
 }
 
 CollaborativeFiltering::~CollaborativeFiltering()
@@ -51,7 +54,7 @@ inline float CollaborativeFiltering::EuclidianSimilarity(float dist)
 	return 1 / (1 + dist);
 }
 
-void CollaborativeFiltering::CosDistance(Vector_i &x, Vector_i &y)
+float CollaborativeFiltering::CosDistance(Vector_i &x, Vector_i &y)
 {
 	if(y.size() != x.size())
 	{
@@ -88,7 +91,8 @@ void CollaborativeFiltering::CosSimilarityDistance(ndVector_i UserData)
 UserBasedCF::UserBasedCF()
 {
 	sThresh = 0.3;
-	tThresh = 10;
+	tThresh = 100;
+	mThresh = 15;
 	lamda = 0.95;
 }
 
@@ -103,9 +107,9 @@ void UserBasedCF::LoadData(ndVector_i UserData)
 void UserBasedCF::PatternMining()
 {
 	Habits.clear();
-	for(int i = 0; i < PatternTimeVar.size(); i++)
+	for(int i = 0; i < PatternTimesVar.size(); i++)
 	{
-		if(PatternTimeVar[i] < tThresh)
+		if(PatternTimesVar[i] < tThresh)
 		{
 			Habits[PatternTimesMean[i]] = i;
 		}
@@ -116,26 +120,28 @@ Vector_i UserBasedCF::Recommend(int time)
 {
 	cout << "UserBasedCF recommending..." << endl;
 	map<int, int>::iterator iter;
+	Vector_i res;
 	
 	//just print all the habits
 	for(iter = Habits.begin(); iter != Habits.end(); iter++)
 	{
+		int exe_time = iter->first;
 		int pattern_index = iter->second;
+		res.push_back(exe_time);
 		for (int j = 0; j < Patterns[pattern_index].size(); j++)
 		{
 			cout << Patterns[pattern_index][j] << ' ';
 		}
-		cout << endl;
+		cout << "-- " << exe_time << endl;
 	}
 	
 	//real recommending
-	Vector_i temp;
-	if((iter = Habits.find(time)) != Habits.end())
+	/*if((iter = Habits.find(time)) != Habits.end())
 	{
-		temp = Patterns[iter->second];
-	}
+		res = Patterns[iter->second];
+	}*/
 	
-	return temp;
+	return res;
 }
 
 void UserBasedCF::FindSimilarNeighbors(int id, Vector_i &neighbors)
@@ -143,33 +149,50 @@ void UserBasedCF::FindSimilarNeighbors(int id, Vector_i &neighbors)
 
 }
 
-void UserBasedCF::FindPatternTime(ndVector_i &patterns, ndVector_i &UserData)
+void UserBasedCF::FindPatternTime(ndVector_i &patterns, ndVector_i &user_data)
 {
-	Vector_f exe_time;
+	Vector_i exe_time;
 	if(patterns.empty())
 	{
 		return;
 	}
 
 	int num_patterns = patterns.size();
-	int num_users = UserData.size();
+	int num_users = user_data.size();
+	//cout << "user_data.size: " << num_users << endl;
 
 	//get the execute time of each pattern
 	for(int i = 0; i < num_patterns; i++)
 	{
 		int j;
+		int mode_len = 0;
+		int start_time = 0;
 		for(j = 0; j < num_users; j++)
 		{
-			float cosdis = CosDistance(patterns[i], UserData[j]);
+			float cosdis = CosDistance(patterns[i], user_data[j]);
+			//cout << cosdis << ' ';
 			if(cosdis > sThresh)
 			{
-				exe_time.push_back(j);
-				break;
+				if(mode_len == 0)
+					start_time = j;
+				mode_len++;
+				continue;
+			}
+			else
+			{
+				if(mode_len > mThresh)
+				{
+					exe_time.push_back(start_time);
+					cout << "execute time: " << start_time << endl;
+					break;
+				}
+				mode_len = 0;
 			}
 		}
+		//cout << endl;
 		if(j == num_users)
 		{
-			exe_time.push_back(0.0);
+			exe_time.push_back(-1);
 		}
 	}
 
@@ -192,17 +215,33 @@ void UserBasedCF::FindPatternTime(ndVector_i &patterns, ndVector_i &UserData)
 		}
 		if(index != -1)
 		{
-			//new variance
-			exe_time_var[i] = pow(exe_time[i] - PatternTimesMean[index], 2);
-			//moving average
-			exe_time[i] = (1 - lamda) * exe_time[i] + lamda * PatternTimesMean[index];
-			exe_time_var[i] = (1 - lamda) * exe_time_var[i] + lamda * PatternTimesVar[index];
+			//maintain the last value if not found in log
+			if(exe_time[i] == -1)
+			{
+				exe_time[i] = PatternTimesMean[index];
+				exe_time_var[i] = 0.0;
+			}
+			else
+			{
+				exe_time_var[i] = pow(exe_time[i] - PatternTimesMean[index], 2);
+				//moving average
+				exe_time[i] = (1 - lamda) * exe_time[i] + lamda * PatternTimesMean[index];
+				exe_time_var[i] = (1 - lamda) * exe_time_var[i] + lamda * PatternTimesVar[index];
+			}
 		}
 	}
 
 	Patterns.assign(patterns.begin(), patterns.end());
 	PatternTimesMean = exe_time;
 	PatternTimesVar = exe_time_var;
+
+	//debug
+	cout << " average pattern execute time and variance: ";
+	for(int i = 0; i < PatternTimesVar.size(); i++)
+	{
+		cout << '(' << PatternTimesMean[i] << ',' << PatternTimesVar[i] << ')';
+	}
+	cout << endl;
 }
 
 bool UserBasedCF::ValidPattern(Vector_i pattern)
@@ -237,7 +276,7 @@ void UserBasedCF::EuclidianDistance(ndVector_i v)
 	}
 }
 
-void UserBasedCF::CosDistance(ndVector_i v)
+/*void UserBasedCF::CosDistance(ndVector_i v)
 {
 	if (UserSize < 2)
 		return;
@@ -261,7 +300,7 @@ void UserBasedCF::CosDistance(ndVector_i v)
 			sUsers[i][j] = sum_xy / sqrt(sum_x2 * sum_y2);
 		}
 	}
-}
+}*/
 
 void UserBasedCF::CosSimilarityDistance(ndVector_i v)
 {
@@ -318,19 +357,20 @@ void ItemBasedCF::LoadData(char* file)
 
 	//used for getting the item number
 	map<string, int> addr_index = MapAddr2Index();
-	const int hours_of_day = 24;
-	const int seconds_of_hour = 3600;
-	UserSize = hours_of_day * seconds_of_hour / TIME_QUANT;
-	ItemSize = addr_index.size();
+
+	//resize the sItems to ItemSize * ItemSize
+	if(ItemSize != addr_index.size())
+	{
+		ItemSize = addr_index.size();
+		Resize(UserData, UserSize, ItemSize);
+		Resize(sItems, ItemSize, ItemSize);
+		Resize(sItemsAvg, ItemSize, ItemSize);
+	}
 	//debug_msg("vector size: %d,%d\n", UserSize, ItemSize);
 	//cout << "vector size: " << UserSize << ' ' << ItemSize << endl;
 
 	//vectorize the log file
-	vector<vector<int> > UserData(UserSize, Vector_i(ItemSize, 0));
 	Vectorize(file, UserData);
-
-	//resize the sItems to ItemSize * ItemSize
-	Resize(sItems, ItemSize, ItemSize);
 
 	//calculate the similarity
 	CosDistance(UserData);
@@ -344,7 +384,6 @@ void ItemBasedCF::LoadData(char* file)
 
 void ItemBasedCF::UpdateSimilarity()
 {
-	int new_size = sItems.size();
 	/*if(sItemsAvg.empty())
 	{
 		//debug_msg("items similarities empty, initializing...\n");
@@ -361,11 +400,6 @@ void ItemBasedCF::UpdateSimilarity()
 		return;
 	}*/
 	
-	if(sItemsAvg.size() != new_size)
-	{
-		Resize(sItemsAvg, new_size, new_size);
-	}
-
 	//cout << "updating item-similarity\n";
 	//debug_msg("updating item-similarity\n");
 	/*cout << "old:" << endl;
@@ -377,9 +411,9 @@ void ItemBasedCF::UpdateSimilarity()
 	//update the similarity by move average
 	//1. fixed lamda
 	//2. recomputed lamda accoring to the relative weights
-	for(int i = 0; i < new_size; i++)
+	for(int i = 0; i < ItemSize; i++)
 	{
-		for(int j = 0; j < new_size; j++)
+		for(int j = 0; j < ItemSize; j++)
 		{
 			//sItemsAvg[i][j] = lamda * sItemsAvg[i][j] + (1 - lamda)/(1 - pow(lamda, LogIndex)) * sItems[i][j];
 			//sItemsAvg[i][j] = lamda * sItemsAvg[i][j] + (1 - lamda) * sItems[i][j];
@@ -395,16 +429,15 @@ void ItemBasedCF::UpdateSimilarity()
 
 void ItemBasedCF::PatternMining()
 {
-	int items = sItems.size();
-	Vector_i visited(items, 0);
+	Vector_i visited(ItemSize, 0);
 	Patterns.clear();
-	for (int i = 0; i < items; i++)
+	for (int i = 0; i < ItemSize; i++)
 	{
 		if (visited[i])
 			continue;
 		q.push(i);
 		visited[i] = 1;
-		Vector_i neighbors(items, 0);
+		Vector_i neighbors(ItemSize, 0);
 		neighbors[i] = 1;
 		while (!q.empty())
 		{
@@ -424,8 +457,7 @@ void ItemBasedCF::PatternMining()
 
 void ItemBasedCF::FindSimilarNeighbors(int id, Vector_i &neighbors, Vector_i &visited)
 {
-	int items = sItems.size();
-	for (int i = 0; i < items; i++)
+	for (int i = 0; i < ItemSize; i++)
 	{
 		if (sItemsAvg[id][i] > sThresh && !visited[i])
 		{

@@ -55,7 +55,8 @@ public:
 
 	virtual void EuclidianDistance(ndVector_i UserData);
 	virtual float EuclidianSimilarity(float dist);
-	virtual void CosDistance(Vector_i &x, Vector_i &y);
+	virtual float CosDistance(Vector_i &x, Vector_i &y);
+	//virtual void CosDistance(ndVector_i UserData);
 	virtual void CosSimilarityDistance(ndVector_i UserData);
 };
 
@@ -64,6 +65,7 @@ class UserBasedCF : public CollaborativeFiltering
 {
 public:
 	float tThresh;
+	int mThresh;
 	//a map recording user's habits, time: pattern_index
 	std::map<int, int> Habits;
 	
@@ -91,7 +93,7 @@ public:
 	virtual Vector_i Recommend(int t);
 
 	virtual void EuclidianDistance(ndVector_i UserData);
-	virtual void CosDistance(ndVector_i UserData);
+	//virtual void CosDistance(ndVector_i UserData);
 	virtual void CosSimilarityDistance(ndVector_i UserData);
 };
 

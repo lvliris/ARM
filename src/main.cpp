@@ -53,14 +53,25 @@ int main(int argc, char* argv[])
 
 	//OrderPoll op;
 
+	int mode_num = atoi(argv[1]);
+	int habit_num = atoi(argv[2]);
+	int habit_time;
 	vector<vector<int> > modes;
-	for(int i = 0; i < 10; i++)
+	vector<int> habits;
+	for(int i = 0; i < mode_num; i++)
 	{
 		vector<int> mode;
 		char mode_path[50] = {0};
 		sprintf(mode_path, "config/mode%d.json", i);
 		mode = ReadModeFromFile(mode_path);
 		modes.push_back(mode);
+		if(i < habit_num)
+		{
+			Document d;
+			ReadJsonFromFile(d, mode_path);
+			habit_time = d["time"].GetInt();
+			habits.push_back(habit_time);
+		}
 	}
 	cout << "----------mode gt----------" << endl;
 	PrintVector(modes);
@@ -73,9 +84,14 @@ int main(int argc, char* argv[])
 	struct dirent *filename;
 	DIR *dir;
 	int iter = 0;
+	float last_time_var = 0;
+	float last_precision = 0;
+	float last_recall = 0;
 	Document df;
 	Value precision(kArrayType);
 	Value recall(kArrayType);
+	Value habitvar(kArrayType);
+	Value habitnum(kArrayType);
 	df.SetObject();
 
 	dir = opendir("log/");
@@ -93,50 +109,64 @@ int main(int argc, char* argv[])
 
 		//perform pattern mining
 		icf.PatternMining();
+
+		//perform habit mining
+		ucf.FindPatternTime(icf.Patterns, icf.UserData);
 		ucf.PatternMining();
 
 		//print the recognized patterns
 		vector<int> temp;
-		icf.Recommend(temp);
-		ucf.Recommend(0);
+		//icf.Recommend(temp);
+		temp = ucf.Recommend(0);
 		
-		//perform habit mining
-		ucf.FindPatternTime(icf.Patterns, icf.UserData);
-
 		//evaluate the result
+		if(!temp.empty())
+		{
+			last_time_var = RecognitionEvaluate(temp, habits);
+		}
+		habitvar.PushBack(last_time_var, df.GetAllocator());
+		habitnum.PushBack(temp.size(), df.GetAllocator());
+
 		vector<float> res;
 		res = RecognitionEvaluate(icf.Patterns, modes);
 		if(!res.empty())
 		{
-			precision.PushBack(res[0], df.GetAllocator());
-			recall.PushBack(res[1], df.GetAllocator());
+			last_precision = res[0];
+			last_recall = res[1];
 		}
-		else
-		{
-			precision.PushBack(0.0, df.GetAllocator());
-			recall.PushBack(0.0, df.GetAllocator());
-		}
-		cout << "iteration " << iter++ << ": precison and recall-" << res[0] << ',' << res[1] << endl;
+		precision.PushBack(last_precision, df.GetAllocator());
+		recall.PushBack(last_recall, df.GetAllocator());
+		cout << "iteration " << iter++ << ": precision and recall: " << res[0] << ',' << res[1] << endl;
 	}
 
 	df.AddMember("precision", precision, df.GetAllocator());
 	df.AddMember("recall", recall, df.GetAllocator());
+	df.AddMember("habitvar", habitvar, df.GetAllocator());
+	df.AddMember("habitnum", habitnum, df.GetAllocator());
 
 	if(WriteJsonToFile(df, "config/evaluation.json") > 0)
 	{
 		cout << "write evaluation result to file success!!!" << endl;
 	}
+
+	for(int i = 0; i < habits.size(); i++)
+	{
+		cout << habits[i] << endl;
+	}
 	
 	//find the habit
 	ucf.PatternMining();
 	ucf.Recommend(0);
+	icf.Recommend(vector<int>(1));
+	cout << "----------mode gt----------" << endl;
+	PrintVector(modes);
 
 	//save the final patterns
 	printf("saving patterns...\n");
-	SavePatterns(icf.Patterns);
+	//SavePatterns(icf.Patterns);
 
 	//hold on
-	while(true)
+	while(false)
 	{
 		sleep(100);
 	}

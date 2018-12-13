@@ -3,18 +3,48 @@ import time
 import copy
 import numpy as np
 import random
+import argparse
+import sys
+
+
+def parse_args():
+    parser = argparse.ArgumentParser(description='Parameters to generate logs')
+    parser.add_argument('--num_dev', dest='num_dev',
+                        help='the number of the total devices',
+                        default=100, type=int)
+    parser.add_argument('--num_mode', dest='num_mode',
+                        help='the number of the total modes',
+                        default=10, type=int)
+    parser.add_argument('--num_habit', dest='num_habit',
+                        help='the number of habit modes',
+                        default=4, type=int)
+    parser.add_argument('--habit_var', dest='habit_var',
+                        help='the variance of the habit mode device execute time',
+                        default=10, type=int)
+    parser.add_argument('--mode_len', dest='mode_len',
+                        help='the length of each modes',
+                        default=5, type=int)
+    parser.add_argument('--noise_act', dest='noise_act',
+                        help='the times of each device noise',
+                        default=3, type=int)
+    '''if len(sys.argv) == 1:
+        parser.print_help()
+        sys.exit(1)'''
+
+    args = parser.parse_args()
+    return args
 
 
 def save_log_as_json(file_name,
-                 electric_type='0100',
-                 long_addr='',
-                 addr='ABCD',
-                 opt='send',
-                 state=0,
-                 sub_seq=1,
-                 mode_index=0,
-                 data='',
-                 time=0):
+                     electric_type='0100',
+                     long_addr='',
+                     addr='ABCD',
+                     opt='send',
+                     state=0,
+                     sub_seq=1,
+                     mode_index=0,
+                     data='',
+                     time=0):
     # create a dictionary
     log = {}
     log['type'] = electric_type
@@ -155,8 +185,13 @@ def gen_log_from_excel():
 
 
 def gen_log_randomly(file_names):
-    num_dev = 100
-    num_mode = 10
+    args = parse_args()
+    print 'Called with arguments:'
+    print args
+
+    num_dev = args.num_dev
+    num_mode = args.num_mode
+    num_habit = args.num_habit
 
     # generate address randomly
     addr = {}
@@ -181,8 +216,17 @@ def gen_log_randomly(file_names):
              'opt': 'send',
              'info': info}
     mode = {'enable': 1}
-    mode_len = 8
+
+    mode_len = args.mode_len
+    total_time = 24*3600
+    time_unit = 100
+    m = total_time / time_unit
+
     mode_assembly = np.random.choice(num_dev, mode_len * num_mode, replace=False)
+
+    mode_start_field = np.random.choice(num_mode, num_mode, replace=False);
+    habit_mode_start_bias = np.random.choice(total_time / num_mode, num_habit);
+    habit_mode_exe_time = mode_start_field[:num_habit] * total_time / num_mode + habit_mode_start_bias
     start = 0
     for i in range(num_mode):
         mode_index[i] = mode_assembly[start:start+mode_len]
@@ -194,21 +238,19 @@ def gen_log_randomly(file_names):
             order['info']['data'] = '01%d******FF' % i
             orders.append(copy.deepcopy(order))
         mode['orders'] = orders
+	if i < num_habit:
+		mode['time'] = habit_mode_exe_time[i] / time_unit
         print mode
         save_as_json('config/mode%d.json' % i, mode)
         start += mode_len
 
     # generate log randomly
-    num_habit = 4
-    total_time = 24*3600
-    time_unit = 100
-    m = total_time / time_unit
+    mode_param = {'act_times': 3, 'time_last': [1800, 600], 'time_varies': [0, 1]}
+    habit_param = {'act_prob': 0.7, 'time_last': [1800, 600], 'time_varies': [0, 1]}
+    noise_param = {'act_times': 1, 'time_last': [60, 100]}
+    habit_param['time_varies'][1] = args.habit_var
+    noise_param['act_times'] = args.noise_act
 
-    mode_param = {'act_times': 3, 'time_last': (1800, 600), 'time_varies': (0, 100)}
-    habit_param = {'act_prob': 0.7, 'time_last': (1800, 600), 'time_varies': (0, 100)}
-    noise_param = {'act_times': 3, 'time_last': (60, 100)}
-
-    habit_mode_exe_time = np.random.choice(total_time, num_habit, replace=False)
     for f in file_names:
         time_array = time.strptime(f[:-4] + ' 00:00:00', '%Y-%m-%d %H:%M:%S')
         date_time = int(time.mktime(time_array))
