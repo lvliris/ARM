@@ -224,8 +224,8 @@ def gen_log_randomly(file_names):
 
     mode_assembly = np.random.choice(num_dev, mode_len * num_mode, replace=False)
 
-    mode_start_field = np.random.choice(num_mode, num_mode, replace=False);
-    habit_mode_start_bias = np.random.choice(total_time / num_mode, num_habit);
+    mode_start_field = np.random.choice(num_mode, num_mode, replace=False)
+    habit_mode_start_bias = np.random.choice(total_time / num_mode, num_habit)
     habit_mode_exe_time = mode_start_field[:num_habit] * total_time / num_mode + habit_mode_start_bias
     start = 0
     for i in range(num_mode):
@@ -238,16 +238,16 @@ def gen_log_randomly(file_names):
             order['info']['data'] = '01%d******FF' % i
             orders.append(copy.deepcopy(order))
         mode['orders'] = orders
-	if i < num_habit:
-		mode['time'] = habit_mode_exe_time[i] / time_unit
+        if i < num_habit:
+            mode['time'] = habit_mode_exe_time[i] / time_unit
         print mode
         save_as_json('config/mode%d.json' % i, mode)
         start += mode_len
 
     # generate log randomly
-    mode_param = {'act_times': 3, 'time_last': [1800, 600], 'time_varies': [0, 1]}
-    habit_param = {'act_prob': 0.7, 'time_last': [1800, 600], 'time_varies': [0, 1]}
-    noise_param = {'act_times': 1, 'time_last': [60, 100]}
+    mode_param = {'act_times': 3, 'time_last': [6000, 600], 'time_varies': [0, 300]}
+    habit_param = {'act_prob': 0.7, 'time_last': [6000, 600], 'time_varies': [0, 300]}
+    noise_param = {'act_times': 1, 'time_last': [1800, 300]}
     habit_param['time_varies'][1] = args.habit_var
     noise_param['act_times'] = args.noise_act
 
@@ -283,7 +283,9 @@ def gen_log_randomly(file_names):
             for t in range(m):
                 if np.random.choice([0, 1], p=[1 - prob_exe, prob_exe]) == 1:'''
         for r in range(mode_param['act_times']):
-            act_times = np.random.choice(m, num_mode - num_habit)
+            normal_mode_start_field = np.random.choice(mode_start_field[num_habit:], num_mode - num_habit, replace=False)
+            normal_mode_start_bias = np.random.choice(total_time / num_mode, num_mode - num_habit)
+            act_times = normal_mode_start_field * total_time / num_mode + normal_mode_start_bias
             for h, t in enumerate(act_times):
                 if True:
                     exe_time_varies = gaussian_distribution(mode_param['time_varies'][0],
@@ -298,7 +300,7 @@ def gen_log_randomly(file_names):
                         order['info']['mode_index'] = h + num_habit
                         order['info']['state'] = 1
                         order['info']['data'] = '01%d******FF' % (h + num_habit)
-                        order['time'] = date_time + t * time_unit + exe_time_varies[i]
+                        order['time'] = date_time + t + exe_time_varies[i]
                         log_orders.append(copy.deepcopy(order))
                         order['info']['state'] = 0
                         order['time'] += last_time[i]

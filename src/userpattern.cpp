@@ -92,7 +92,7 @@ UserBasedCF::UserBasedCF()
 {
 	sThresh = 0.3;
 	tThresh = 100;
-	mThresh = 15;
+	mThresh = 30;
 	lamda = 0.95;
 }
 
@@ -151,7 +151,7 @@ void UserBasedCF::FindSimilarNeighbors(int id, Vector_i &neighbors)
 
 void UserBasedCF::FindPatternTime(ndVector_i &patterns, ndVector_i &user_data)
 {
-	Vector_i exe_time;
+	Vector_f exe_time;
 	if(patterns.empty())
 	{
 		return;
@@ -167,6 +167,7 @@ void UserBasedCF::FindPatternTime(ndVector_i &patterns, ndVector_i &user_data)
 		int j;
 		int mode_len = 0;
 		int start_time = 0;
+		cout << "mode " << i << endl;
 		for(j = 0; j < num_users; j++)
 		{
 			float cosdis = CosDistance(patterns[i], user_data[j]);
@@ -176,10 +177,12 @@ void UserBasedCF::FindPatternTime(ndVector_i &patterns, ndVector_i &user_data)
 				if(mode_len == 0)
 					start_time = j;
 				mode_len++;
+				//cout << 1;
 				continue;
 			}
 			else
 			{
+				//cout << 0;
 				if(mode_len > mThresh)
 				{
 					exe_time.push_back(start_time);
@@ -207,7 +210,7 @@ void UserBasedCF::FindPatternTime(ndVector_i &patterns, ndVector_i &user_data)
 		for(int j = 0; j < num_patterns_pre; j++)
 		{
 			float pattern_dis = CosDistance(patterns[i], Patterns[j]);
-			if(pattern_dis > max_pattern_dis)
+			if(pattern_dis > sThresh && pattern_dis > max_pattern_dis)
 			{
 				max_pattern_dis = pattern_dis;
 				index = j;

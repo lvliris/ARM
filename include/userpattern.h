@@ -74,7 +74,7 @@ public:
 
 	ndVector_f sUsers;
 	//average execute times of all patterns
-	Vector_i PatternTimesMean;
+	Vector_f PatternTimesMean;
 	//execute time variance
 	Vector_f PatternTimesVar;
 

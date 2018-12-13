@@ -112,6 +112,7 @@ int main(int argc, char* argv[])
 
 		//perform habit mining
 		ucf.FindPatternTime(icf.Patterns, icf.UserData);
+		//PrintVector(icf.UserData);
 		ucf.PatternMining();
 
 		//print the recognized patterns
